@@ -13,7 +13,14 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppHomeRouteImport } from './routes/_app.home'
+import { Route as AppAssessIndexRouteImport } from './routes/_app.assess.index'
+import { Route as AppAssessSafetyRouteImport } from './routes/_app.assess.safety'
+import { Route as AppAssessRedFlagRouteImport } from './routes/_app.assess.red-flag'
+import { Route as AppAssessLocationRouteImport } from './routes/_app.assess.location'
+import { Route as AppAssessActivityRouteImport } from './routes/_app.assess.activity'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -35,10 +42,44 @@ const DisclaimerRoute = DisclaimerRouteImport.update({
   path: '/disclaimer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppHomeRoute = AppHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessIndexRoute = AppAssessIndexRouteImport.update({
+  id: '/assess/',
+  path: '/assess/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessSafetyRoute = AppAssessSafetyRouteImport.update({
+  id: '/assess/safety',
+  path: '/assess/safety',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessRedFlagRoute = AppAssessRedFlagRouteImport.update({
+  id: '/assess/red-flag',
+  path: '/assess/red-flag',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessLocationRoute = AppAssessLocationRouteImport.update({
+  id: '/assess/location',
+  path: '/assess/location',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessActivityRoute = AppAssessActivityRouteImport.update({
+  id: '/assess/activity',
+  path: '/assess/activity',
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -47,6 +88,12 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/home': typeof AppHomeRoute
+  '/assess/activity': typeof AppAssessActivityRoute
+  '/assess/location': typeof AppAssessLocationRoute
+  '/assess/red-flag': typeof AppAssessRedFlagRoute
+  '/assess/safety': typeof AppAssessSafetyRoute
+  '/assess/': typeof AppAssessIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,31 +101,74 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/home': typeof AppHomeRoute
+  '/assess/activity': typeof AppAssessActivityRoute
+  '/assess/location': typeof AppAssessLocationRoute
+  '/assess/red-flag': typeof AppAssessRedFlagRoute
+  '/assess/safety': typeof AppAssessSafetyRoute
+  '/assess': typeof AppAssessIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
   '/disclaimer': typeof DisclaimerRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_app/home': typeof AppHomeRoute
+  '/_app/assess/activity': typeof AppAssessActivityRoute
+  '/_app/assess/location': typeof AppAssessLocationRoute
+  '/_app/assess/red-flag': typeof AppAssessRedFlagRoute
+  '/_app/assess/safety': typeof AppAssessSafetyRoute
+  '/_app/assess/': typeof AppAssessIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/disclaimer' | '/forgot-password' | '/login' | '/signup'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/disclaimer' | '/forgot-password' | '/login' | '/signup'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
     | '/disclaimer'
     | '/forgot-password'
     | '/login'
     | '/signup'
+    | '/home'
+    | '/assess/activity'
+    | '/assess/location'
+    | '/assess/red-flag'
+    | '/assess/safety'
+    | '/assess/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/disclaimer'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/home'
+    | '/assess/activity'
+    | '/assess/location'
+    | '/assess/red-flag'
+    | '/assess/safety'
+    | '/assess'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/disclaimer'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/_app/home'
+    | '/_app/assess/activity'
+    | '/_app/assess/location'
+    | '/_app/assess/red-flag'
+    | '/_app/assess/safety'
+    | '/_app/assess/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
   DisclaimerRoute: typeof DisclaimerRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
@@ -115,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -122,11 +219,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/home': {
+      id: '/_app/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AppHomeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/': {
+      id: '/_app/assess/'
+      path: '/assess'
+      fullPath: '/assess/'
+      preLoaderRoute: typeof AppAssessIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/safety': {
+      id: '/_app/assess/safety'
+      path: '/assess/safety'
+      fullPath: '/assess/safety'
+      preLoaderRoute: typeof AppAssessSafetyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/red-flag': {
+      id: '/_app/assess/red-flag'
+      path: '/assess/red-flag'
+      fullPath: '/assess/red-flag'
+      preLoaderRoute: typeof AppAssessRedFlagRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/location': {
+      id: '/_app/assess/location'
+      path: '/assess/location'
+      fullPath: '/assess/location'
+      preLoaderRoute: typeof AppAssessLocationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/activity': {
+      id: '/_app/assess/activity'
+      path: '/assess/activity'
+      fullPath: '/assess/activity'
+      preLoaderRoute: typeof AppAssessActivityRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppHomeRoute: typeof AppHomeRoute
+  AppAssessActivityRoute: typeof AppAssessActivityRoute
+  AppAssessLocationRoute: typeof AppAssessLocationRoute
+  AppAssessRedFlagRoute: typeof AppAssessRedFlagRoute
+  AppAssessSafetyRoute: typeof AppAssessSafetyRoute
+  AppAssessIndexRoute: typeof AppAssessIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppHomeRoute: AppHomeRoute,
+  AppAssessActivityRoute: AppAssessActivityRoute,
+  AppAssessLocationRoute: AppAssessLocationRoute,
+  AppAssessRedFlagRoute: AppAssessRedFlagRoute,
+  AppAssessSafetyRoute: AppAssessSafetyRoute,
+  AppAssessIndexRoute: AppAssessIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
   DisclaimerRoute: DisclaimerRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
@@ -135,3 +295,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
