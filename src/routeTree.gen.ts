@@ -19,8 +19,13 @@ import { Route as AppHomeRouteImport } from './routes/_app.home'
 import { Route as AppAssessIndexRouteImport } from './routes/_app.assess.index'
 import { Route as AppAssessSafetyRouteImport } from './routes/_app.assess.safety'
 import { Route as AppAssessRedFlagRouteImport } from './routes/_app.assess.red-flag'
+import { Route as AppAssessProcessingRouteImport } from './routes/_app.assess.processing'
 import { Route as AppAssessLocationRouteImport } from './routes/_app.assess.location'
 import { Route as AppAssessActivityRouteImport } from './routes/_app.assess.activity'
+import { Route as AppAssessResultIdRouteImport } from './routes/_app.assess.result.$id'
+import { Route as AppAssessQuestionsTypeRouteImport } from './routes/_app.assess.questions.$type'
+import { Route as AppAssessFollowupIdRouteImport } from './routes/_app.assess.followup.$id'
+import { Route as AppAssessCarePlanIdRouteImport } from './routes/_app.assess.care-plan.$id'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -71,6 +76,11 @@ const AppAssessRedFlagRoute = AppAssessRedFlagRouteImport.update({
   path: '/assess/red-flag',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAssessProcessingRoute = AppAssessProcessingRouteImport.update({
+  id: '/assess/processing',
+  path: '/assess/processing',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAssessLocationRoute = AppAssessLocationRouteImport.update({
   id: '/assess/location',
   path: '/assess/location',
@@ -79,6 +89,26 @@ const AppAssessLocationRoute = AppAssessLocationRouteImport.update({
 const AppAssessActivityRoute = AppAssessActivityRouteImport.update({
   id: '/assess/activity',
   path: '/assess/activity',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessResultIdRoute = AppAssessResultIdRouteImport.update({
+  id: '/assess/result/$id',
+  path: '/assess/result/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessQuestionsTypeRoute = AppAssessQuestionsTypeRouteImport.update({
+  id: '/assess/questions/$type',
+  path: '/assess/questions/$type',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessFollowupIdRoute = AppAssessFollowupIdRouteImport.update({
+  id: '/assess/followup/$id',
+  path: '/assess/followup/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessCarePlanIdRoute = AppAssessCarePlanIdRouteImport.update({
+  id: '/assess/care-plan/$id',
+  path: '/assess/care-plan/$id',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -91,9 +121,14 @@ export interface FileRoutesByFullPath {
   '/home': typeof AppHomeRoute
   '/assess/activity': typeof AppAssessActivityRoute
   '/assess/location': typeof AppAssessLocationRoute
+  '/assess/processing': typeof AppAssessProcessingRoute
   '/assess/red-flag': typeof AppAssessRedFlagRoute
   '/assess/safety': typeof AppAssessSafetyRoute
   '/assess/': typeof AppAssessIndexRoute
+  '/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
+  '/assess/followup/$id': typeof AppAssessFollowupIdRoute
+  '/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
+  '/assess/result/$id': typeof AppAssessResultIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -104,9 +139,14 @@ export interface FileRoutesByTo {
   '/home': typeof AppHomeRoute
   '/assess/activity': typeof AppAssessActivityRoute
   '/assess/location': typeof AppAssessLocationRoute
+  '/assess/processing': typeof AppAssessProcessingRoute
   '/assess/red-flag': typeof AppAssessRedFlagRoute
   '/assess/safety': typeof AppAssessSafetyRoute
   '/assess': typeof AppAssessIndexRoute
+  '/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
+  '/assess/followup/$id': typeof AppAssessFollowupIdRoute
+  '/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
+  '/assess/result/$id': typeof AppAssessResultIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -119,9 +159,14 @@ export interface FileRoutesById {
   '/_app/home': typeof AppHomeRoute
   '/_app/assess/activity': typeof AppAssessActivityRoute
   '/_app/assess/location': typeof AppAssessLocationRoute
+  '/_app/assess/processing': typeof AppAssessProcessingRoute
   '/_app/assess/red-flag': typeof AppAssessRedFlagRoute
   '/_app/assess/safety': typeof AppAssessSafetyRoute
   '/_app/assess/': typeof AppAssessIndexRoute
+  '/_app/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
+  '/_app/assess/followup/$id': typeof AppAssessFollowupIdRoute
+  '/_app/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
+  '/_app/assess/result/$id': typeof AppAssessResultIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -134,9 +179,14 @@ export interface FileRouteTypes {
     | '/home'
     | '/assess/activity'
     | '/assess/location'
+    | '/assess/processing'
     | '/assess/red-flag'
     | '/assess/safety'
     | '/assess/'
+    | '/assess/care-plan/$id'
+    | '/assess/followup/$id'
+    | '/assess/questions/$type'
+    | '/assess/result/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -147,9 +197,14 @@ export interface FileRouteTypes {
     | '/home'
     | '/assess/activity'
     | '/assess/location'
+    | '/assess/processing'
     | '/assess/red-flag'
     | '/assess/safety'
     | '/assess'
+    | '/assess/care-plan/$id'
+    | '/assess/followup/$id'
+    | '/assess/questions/$type'
+    | '/assess/result/$id'
   id:
     | '__root__'
     | '/'
@@ -161,9 +216,14 @@ export interface FileRouteTypes {
     | '/_app/home'
     | '/_app/assess/activity'
     | '/_app/assess/location'
+    | '/_app/assess/processing'
     | '/_app/assess/red-flag'
     | '/_app/assess/safety'
     | '/_app/assess/'
+    | '/_app/assess/care-plan/$id'
+    | '/_app/assess/followup/$id'
+    | '/_app/assess/questions/$type'
+    | '/_app/assess/result/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -247,6 +307,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAssessRedFlagRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/assess/processing': {
+      id: '/_app/assess/processing'
+      path: '/assess/processing'
+      fullPath: '/assess/processing'
+      preLoaderRoute: typeof AppAssessProcessingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/assess/location': {
       id: '/_app/assess/location'
       path: '/assess/location'
@@ -261,6 +328,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAssessActivityRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/assess/result/$id': {
+      id: '/_app/assess/result/$id'
+      path: '/assess/result/$id'
+      fullPath: '/assess/result/$id'
+      preLoaderRoute: typeof AppAssessResultIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/questions/$type': {
+      id: '/_app/assess/questions/$type'
+      path: '/assess/questions/$type'
+      fullPath: '/assess/questions/$type'
+      preLoaderRoute: typeof AppAssessQuestionsTypeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/followup/$id': {
+      id: '/_app/assess/followup/$id'
+      path: '/assess/followup/$id'
+      fullPath: '/assess/followup/$id'
+      preLoaderRoute: typeof AppAssessFollowupIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/care-plan/$id': {
+      id: '/_app/assess/care-plan/$id'
+      path: '/assess/care-plan/$id'
+      fullPath: '/assess/care-plan/$id'
+      preLoaderRoute: typeof AppAssessCarePlanIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -268,18 +363,28 @@ interface AppRouteChildren {
   AppHomeRoute: typeof AppHomeRoute
   AppAssessActivityRoute: typeof AppAssessActivityRoute
   AppAssessLocationRoute: typeof AppAssessLocationRoute
+  AppAssessProcessingRoute: typeof AppAssessProcessingRoute
   AppAssessRedFlagRoute: typeof AppAssessRedFlagRoute
   AppAssessSafetyRoute: typeof AppAssessSafetyRoute
   AppAssessIndexRoute: typeof AppAssessIndexRoute
+  AppAssessCarePlanIdRoute: typeof AppAssessCarePlanIdRoute
+  AppAssessFollowupIdRoute: typeof AppAssessFollowupIdRoute
+  AppAssessQuestionsTypeRoute: typeof AppAssessQuestionsTypeRoute
+  AppAssessResultIdRoute: typeof AppAssessResultIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppHomeRoute: AppHomeRoute,
   AppAssessActivityRoute: AppAssessActivityRoute,
   AppAssessLocationRoute: AppAssessLocationRoute,
+  AppAssessProcessingRoute: AppAssessProcessingRoute,
   AppAssessRedFlagRoute: AppAssessRedFlagRoute,
   AppAssessSafetyRoute: AppAssessSafetyRoute,
   AppAssessIndexRoute: AppAssessIndexRoute,
+  AppAssessCarePlanIdRoute: AppAssessCarePlanIdRoute,
+  AppAssessFollowupIdRoute: AppAssessFollowupIdRoute,
+  AppAssessQuestionsTypeRoute: AppAssessQuestionsTypeRoute,
+  AppAssessResultIdRoute: AppAssessResultIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
