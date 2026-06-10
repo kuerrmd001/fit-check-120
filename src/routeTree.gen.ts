@@ -16,12 +16,20 @@ import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppHomeRouteImport } from './routes/_app.home'
+import { Route as AppRecoverIndexRouteImport } from './routes/_app.recover.index'
+import { Route as AppGuideIndexRouteImport } from './routes/_app.guide.index'
 import { Route as AppAssessIndexRouteImport } from './routes/_app.assess.index'
+import { Route as AppGuideSearchRouteImport } from './routes/_app.guide.search'
+import { Route as AppGuideSavedRouteImport } from './routes/_app.guide.saved'
 import { Route as AppAssessSafetyRouteImport } from './routes/_app.assess.safety'
 import { Route as AppAssessRedFlagRouteImport } from './routes/_app.assess.red-flag'
 import { Route as AppAssessProcessingRouteImport } from './routes/_app.assess.processing'
 import { Route as AppAssessLocationRouteImport } from './routes/_app.assess.location'
 import { Route as AppAssessActivityRouteImport } from './routes/_app.assess.activity'
+import { Route as AppRecoverSummaryIdRouteImport } from './routes/_app.recover.summary.$id'
+import { Route as AppRecoverSessionIdRouteImport } from './routes/_app.recover.session.$id'
+import { Route as AppRecoverActivityIdRouteImport } from './routes/_app.recover.activity.$id'
+import { Route as AppGuideArticleIdRouteImport } from './routes/_app.guide.article.$id'
 import { Route as AppAssessResultIdRouteImport } from './routes/_app.assess.result.$id'
 import { Route as AppAssessQuestionsTypeRouteImport } from './routes/_app.assess.questions.$type'
 import { Route as AppAssessFollowupIdRouteImport } from './routes/_app.assess.followup.$id'
@@ -61,9 +69,29 @@ const AppHomeRoute = AppHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRecoverIndexRoute = AppRecoverIndexRouteImport.update({
+  id: '/recover/',
+  path: '/recover/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideIndexRoute = AppGuideIndexRouteImport.update({
+  id: '/guide/',
+  path: '/guide/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAssessIndexRoute = AppAssessIndexRouteImport.update({
   id: '/assess/',
   path: '/assess/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideSearchRoute = AppGuideSearchRouteImport.update({
+  id: '/guide/search',
+  path: '/guide/search',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideSavedRoute = AppGuideSavedRouteImport.update({
+  id: '/guide/saved',
+  path: '/guide/saved',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAssessSafetyRoute = AppAssessSafetyRouteImport.update({
@@ -89,6 +117,26 @@ const AppAssessLocationRoute = AppAssessLocationRouteImport.update({
 const AppAssessActivityRoute = AppAssessActivityRouteImport.update({
   id: '/assess/activity',
   path: '/assess/activity',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverSummaryIdRoute = AppRecoverSummaryIdRouteImport.update({
+  id: '/recover/summary/$id',
+  path: '/recover/summary/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverSessionIdRoute = AppRecoverSessionIdRouteImport.update({
+  id: '/recover/session/$id',
+  path: '/recover/session/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverActivityIdRoute = AppRecoverActivityIdRouteImport.update({
+  id: '/recover/activity/$id',
+  path: '/recover/activity/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideArticleIdRoute = AppGuideArticleIdRouteImport.update({
+  id: '/guide/article/$id',
+  path: '/guide/article/$id',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAssessResultIdRoute = AppAssessResultIdRouteImport.update({
@@ -124,11 +172,19 @@ export interface FileRoutesByFullPath {
   '/assess/processing': typeof AppAssessProcessingRoute
   '/assess/red-flag': typeof AppAssessRedFlagRoute
   '/assess/safety': typeof AppAssessSafetyRoute
+  '/guide/saved': typeof AppGuideSavedRoute
+  '/guide/search': typeof AppGuideSearchRoute
   '/assess/': typeof AppAssessIndexRoute
+  '/guide/': typeof AppGuideIndexRoute
+  '/recover/': typeof AppRecoverIndexRoute
   '/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
   '/assess/followup/$id': typeof AppAssessFollowupIdRoute
   '/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
   '/assess/result/$id': typeof AppAssessResultIdRoute
+  '/guide/article/$id': typeof AppGuideArticleIdRoute
+  '/recover/activity/$id': typeof AppRecoverActivityIdRoute
+  '/recover/session/$id': typeof AppRecoverSessionIdRoute
+  '/recover/summary/$id': typeof AppRecoverSummaryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -142,11 +198,19 @@ export interface FileRoutesByTo {
   '/assess/processing': typeof AppAssessProcessingRoute
   '/assess/red-flag': typeof AppAssessRedFlagRoute
   '/assess/safety': typeof AppAssessSafetyRoute
+  '/guide/saved': typeof AppGuideSavedRoute
+  '/guide/search': typeof AppGuideSearchRoute
   '/assess': typeof AppAssessIndexRoute
+  '/guide': typeof AppGuideIndexRoute
+  '/recover': typeof AppRecoverIndexRoute
   '/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
   '/assess/followup/$id': typeof AppAssessFollowupIdRoute
   '/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
   '/assess/result/$id': typeof AppAssessResultIdRoute
+  '/guide/article/$id': typeof AppGuideArticleIdRoute
+  '/recover/activity/$id': typeof AppRecoverActivityIdRoute
+  '/recover/session/$id': typeof AppRecoverSessionIdRoute
+  '/recover/summary/$id': typeof AppRecoverSummaryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -162,11 +226,19 @@ export interface FileRoutesById {
   '/_app/assess/processing': typeof AppAssessProcessingRoute
   '/_app/assess/red-flag': typeof AppAssessRedFlagRoute
   '/_app/assess/safety': typeof AppAssessSafetyRoute
+  '/_app/guide/saved': typeof AppGuideSavedRoute
+  '/_app/guide/search': typeof AppGuideSearchRoute
   '/_app/assess/': typeof AppAssessIndexRoute
+  '/_app/guide/': typeof AppGuideIndexRoute
+  '/_app/recover/': typeof AppRecoverIndexRoute
   '/_app/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
   '/_app/assess/followup/$id': typeof AppAssessFollowupIdRoute
   '/_app/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
   '/_app/assess/result/$id': typeof AppAssessResultIdRoute
+  '/_app/guide/article/$id': typeof AppGuideArticleIdRoute
+  '/_app/recover/activity/$id': typeof AppRecoverActivityIdRoute
+  '/_app/recover/session/$id': typeof AppRecoverSessionIdRoute
+  '/_app/recover/summary/$id': typeof AppRecoverSummaryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -182,11 +254,19 @@ export interface FileRouteTypes {
     | '/assess/processing'
     | '/assess/red-flag'
     | '/assess/safety'
+    | '/guide/saved'
+    | '/guide/search'
     | '/assess/'
+    | '/guide/'
+    | '/recover/'
     | '/assess/care-plan/$id'
     | '/assess/followup/$id'
     | '/assess/questions/$type'
     | '/assess/result/$id'
+    | '/guide/article/$id'
+    | '/recover/activity/$id'
+    | '/recover/session/$id'
+    | '/recover/summary/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -200,11 +280,19 @@ export interface FileRouteTypes {
     | '/assess/processing'
     | '/assess/red-flag'
     | '/assess/safety'
+    | '/guide/saved'
+    | '/guide/search'
     | '/assess'
+    | '/guide'
+    | '/recover'
     | '/assess/care-plan/$id'
     | '/assess/followup/$id'
     | '/assess/questions/$type'
     | '/assess/result/$id'
+    | '/guide/article/$id'
+    | '/recover/activity/$id'
+    | '/recover/session/$id'
+    | '/recover/summary/$id'
   id:
     | '__root__'
     | '/'
@@ -219,11 +307,19 @@ export interface FileRouteTypes {
     | '/_app/assess/processing'
     | '/_app/assess/red-flag'
     | '/_app/assess/safety'
+    | '/_app/guide/saved'
+    | '/_app/guide/search'
     | '/_app/assess/'
+    | '/_app/guide/'
+    | '/_app/recover/'
     | '/_app/assess/care-plan/$id'
     | '/_app/assess/followup/$id'
     | '/_app/assess/questions/$type'
     | '/_app/assess/result/$id'
+    | '/_app/guide/article/$id'
+    | '/_app/recover/activity/$id'
+    | '/_app/recover/session/$id'
+    | '/_app/recover/summary/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -286,11 +382,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHomeRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/recover/': {
+      id: '/_app/recover/'
+      path: '/recover'
+      fullPath: '/recover/'
+      preLoaderRoute: typeof AppRecoverIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/': {
+      id: '/_app/guide/'
+      path: '/guide'
+      fullPath: '/guide/'
+      preLoaderRoute: typeof AppGuideIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/assess/': {
       id: '/_app/assess/'
       path: '/assess'
       fullPath: '/assess/'
       preLoaderRoute: typeof AppAssessIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/search': {
+      id: '/_app/guide/search'
+      path: '/guide/search'
+      fullPath: '/guide/search'
+      preLoaderRoute: typeof AppGuideSearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/saved': {
+      id: '/_app/guide/saved'
+      path: '/guide/saved'
+      fullPath: '/guide/saved'
+      preLoaderRoute: typeof AppGuideSavedRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/assess/safety': {
@@ -326,6 +450,34 @@ declare module '@tanstack/react-router' {
       path: '/assess/activity'
       fullPath: '/assess/activity'
       preLoaderRoute: typeof AppAssessActivityRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/summary/$id': {
+      id: '/_app/recover/summary/$id'
+      path: '/recover/summary/$id'
+      fullPath: '/recover/summary/$id'
+      preLoaderRoute: typeof AppRecoverSummaryIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/session/$id': {
+      id: '/_app/recover/session/$id'
+      path: '/recover/session/$id'
+      fullPath: '/recover/session/$id'
+      preLoaderRoute: typeof AppRecoverSessionIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/activity/$id': {
+      id: '/_app/recover/activity/$id'
+      path: '/recover/activity/$id'
+      fullPath: '/recover/activity/$id'
+      preLoaderRoute: typeof AppRecoverActivityIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/article/$id': {
+      id: '/_app/guide/article/$id'
+      path: '/guide/article/$id'
+      fullPath: '/guide/article/$id'
+      preLoaderRoute: typeof AppGuideArticleIdRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/assess/result/$id': {
@@ -366,11 +518,19 @@ interface AppRouteChildren {
   AppAssessProcessingRoute: typeof AppAssessProcessingRoute
   AppAssessRedFlagRoute: typeof AppAssessRedFlagRoute
   AppAssessSafetyRoute: typeof AppAssessSafetyRoute
+  AppGuideSavedRoute: typeof AppGuideSavedRoute
+  AppGuideSearchRoute: typeof AppGuideSearchRoute
   AppAssessIndexRoute: typeof AppAssessIndexRoute
+  AppGuideIndexRoute: typeof AppGuideIndexRoute
+  AppRecoverIndexRoute: typeof AppRecoverIndexRoute
   AppAssessCarePlanIdRoute: typeof AppAssessCarePlanIdRoute
   AppAssessFollowupIdRoute: typeof AppAssessFollowupIdRoute
   AppAssessQuestionsTypeRoute: typeof AppAssessQuestionsTypeRoute
   AppAssessResultIdRoute: typeof AppAssessResultIdRoute
+  AppGuideArticleIdRoute: typeof AppGuideArticleIdRoute
+  AppRecoverActivityIdRoute: typeof AppRecoverActivityIdRoute
+  AppRecoverSessionIdRoute: typeof AppRecoverSessionIdRoute
+  AppRecoverSummaryIdRoute: typeof AppRecoverSummaryIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -380,11 +540,19 @@ const AppRouteChildren: AppRouteChildren = {
   AppAssessProcessingRoute: AppAssessProcessingRoute,
   AppAssessRedFlagRoute: AppAssessRedFlagRoute,
   AppAssessSafetyRoute: AppAssessSafetyRoute,
+  AppGuideSavedRoute: AppGuideSavedRoute,
+  AppGuideSearchRoute: AppGuideSearchRoute,
   AppAssessIndexRoute: AppAssessIndexRoute,
+  AppGuideIndexRoute: AppGuideIndexRoute,
+  AppRecoverIndexRoute: AppRecoverIndexRoute,
   AppAssessCarePlanIdRoute: AppAssessCarePlanIdRoute,
   AppAssessFollowupIdRoute: AppAssessFollowupIdRoute,
   AppAssessQuestionsTypeRoute: AppAssessQuestionsTypeRoute,
   AppAssessResultIdRoute: AppAssessResultIdRoute,
+  AppGuideArticleIdRoute: AppGuideArticleIdRoute,
+  AppRecoverActivityIdRoute: AppRecoverActivityIdRoute,
+  AppRecoverSessionIdRoute: AppRecoverSessionIdRoute,
+  AppRecoverSummaryIdRoute: AppRecoverSummaryIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
