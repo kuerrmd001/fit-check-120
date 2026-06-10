@@ -1,29 +1,41 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { Activity } from "lucide-react";
+import { PhoneShell } from "@/components/PhoneShell";
+import { store, seedIfEmpty } from "@/lib/assessment/storage";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
-    ],
-  }),
-  component: Index,
+  component: Splash,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Splash() {
+  const nav = useNavigate();
+  useEffect(() => {
+    seedIfEmpty();
+    const t = setTimeout(() => {
+      if (!store.getConsent()) nav({ to: "/disclaimer" });
+      else if (!store.getAuth()) nav({ to: "/login" });
+      else nav({ to: "/home" });
+    }, 1200);
+    return () => clearTimeout(t);
+  }, [nav]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <PhoneShell>
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
+        <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-primary text-white shadow-card">
+          <Activity className="h-10 w-10" />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-navy">Fit Check</h1>
+          <p className="mt-1 text-sm text-navy-soft">
+            ประเมินอาการปวดหลังเบื้องต้น
+          </p>
+        </div>
+        <div className="mt-6 h-1 w-24 overflow-hidden rounded-full bg-muted">
+          <div className="h-full w-1/2 animate-pulse bg-primary" />
+        </div>
+      </div>
+    </PhoneShell>
   );
 }

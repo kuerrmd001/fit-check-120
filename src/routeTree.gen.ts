@@ -9,38 +9,521 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppHomeRouteImport } from './routes/_app.home'
+import { Route as AppRecoverIndexRouteImport } from './routes/_app.recover.index'
+import { Route as AppMoreIndexRouteImport } from './routes/_app.more.index'
+import { Route as AppHistoryIndexRouteImport } from './routes/_app.history.index'
+import { Route as AppGuideIndexRouteImport } from './routes/_app.guide.index'
+import { Route as AppAssessIndexRouteImport } from './routes/_app.assess.index'
+import { Route as AppMoreSupportRouteImport } from './routes/_app.more.support'
+import { Route as AppMoreSettingsRouteImport } from './routes/_app.more.settings'
+import { Route as AppMoreReferencesRouteImport } from './routes/_app.more.references'
+import { Route as AppMoreProfileRouteImport } from './routes/_app.more.profile'
+import { Route as AppMorePrivacyRouteImport } from './routes/_app.more.privacy'
+import { Route as AppMoreNotificationsRouteImport } from './routes/_app.more.notifications'
+import { Route as AppMoreFaqRouteImport } from './routes/_app.more.faq'
+import { Route as AppMoreDeleteAccountRouteImport } from './routes/_app.more.delete-account'
+import { Route as AppHistoryProgressRouteImport } from './routes/_app.history.progress'
+import { Route as AppHistoryInsightsRouteImport } from './routes/_app.history.insights'
+import { Route as AppHistoryIdRouteImport } from './routes/_app.history.$id'
+import { Route as AppGuideSearchRouteImport } from './routes/_app.guide.search'
+import { Route as AppGuideSavedRouteImport } from './routes/_app.guide.saved'
+import { Route as AppAssessSafetyRouteImport } from './routes/_app.assess.safety'
+import { Route as AppAssessRedFlagRouteImport } from './routes/_app.assess.red-flag'
+import { Route as AppAssessProcessingRouteImport } from './routes/_app.assess.processing'
+import { Route as AppAssessLocationRouteImport } from './routes/_app.assess.location'
+import { Route as AppAssessActivityRouteImport } from './routes/_app.assess.activity'
+import { Route as AppRecoverSummaryIdRouteImport } from './routes/_app.recover.summary.$id'
+import { Route as AppRecoverSessionIdRouteImport } from './routes/_app.recover.session.$id'
+import { Route as AppRecoverActivityIdRouteImport } from './routes/_app.recover.activity.$id'
+import { Route as AppGuideArticleIdRouteImport } from './routes/_app.guide.article.$id'
+import { Route as AppAssessResultIdRouteImport } from './routes/_app.assess.result.$id'
+import { Route as AppAssessQuestionsTypeRouteImport } from './routes/_app.assess.questions.$type'
+import { Route as AppAssessFollowupIdRouteImport } from './routes/_app.assess.followup.$id'
+import { Route as AppAssessCarePlanIdRouteImport } from './routes/_app.assess.care-plan.$id'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppHomeRoute = AppHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverIndexRoute = AppRecoverIndexRouteImport.update({
+  id: '/recover/',
+  path: '/recover/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreIndexRoute = AppMoreIndexRouteImport.update({
+  id: '/more/',
+  path: '/more/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHistoryIndexRoute = AppHistoryIndexRouteImport.update({
+  id: '/history/',
+  path: '/history/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideIndexRoute = AppGuideIndexRouteImport.update({
+  id: '/guide/',
+  path: '/guide/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessIndexRoute = AppAssessIndexRouteImport.update({
+  id: '/assess/',
+  path: '/assess/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreSupportRoute = AppMoreSupportRouteImport.update({
+  id: '/more/support',
+  path: '/more/support',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreSettingsRoute = AppMoreSettingsRouteImport.update({
+  id: '/more/settings',
+  path: '/more/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreReferencesRoute = AppMoreReferencesRouteImport.update({
+  id: '/more/references',
+  path: '/more/references',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreProfileRoute = AppMoreProfileRouteImport.update({
+  id: '/more/profile',
+  path: '/more/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMorePrivacyRoute = AppMorePrivacyRouteImport.update({
+  id: '/more/privacy',
+  path: '/more/privacy',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreNotificationsRoute = AppMoreNotificationsRouteImport.update({
+  id: '/more/notifications',
+  path: '/more/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreFaqRoute = AppMoreFaqRouteImport.update({
+  id: '/more/faq',
+  path: '/more/faq',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMoreDeleteAccountRoute = AppMoreDeleteAccountRouteImport.update({
+  id: '/more/delete-account',
+  path: '/more/delete-account',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHistoryProgressRoute = AppHistoryProgressRouteImport.update({
+  id: '/history/progress',
+  path: '/history/progress',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHistoryInsightsRoute = AppHistoryInsightsRouteImport.update({
+  id: '/history/insights',
+  path: '/history/insights',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHistoryIdRoute = AppHistoryIdRouteImport.update({
+  id: '/history/$id',
+  path: '/history/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideSearchRoute = AppGuideSearchRouteImport.update({
+  id: '/guide/search',
+  path: '/guide/search',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideSavedRoute = AppGuideSavedRouteImport.update({
+  id: '/guide/saved',
+  path: '/guide/saved',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessSafetyRoute = AppAssessSafetyRouteImport.update({
+  id: '/assess/safety',
+  path: '/assess/safety',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessRedFlagRoute = AppAssessRedFlagRouteImport.update({
+  id: '/assess/red-flag',
+  path: '/assess/red-flag',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessProcessingRoute = AppAssessProcessingRouteImport.update({
+  id: '/assess/processing',
+  path: '/assess/processing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessLocationRoute = AppAssessLocationRouteImport.update({
+  id: '/assess/location',
+  path: '/assess/location',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessActivityRoute = AppAssessActivityRouteImport.update({
+  id: '/assess/activity',
+  path: '/assess/activity',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverSummaryIdRoute = AppRecoverSummaryIdRouteImport.update({
+  id: '/recover/summary/$id',
+  path: '/recover/summary/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverSessionIdRoute = AppRecoverSessionIdRouteImport.update({
+  id: '/recover/session/$id',
+  path: '/recover/session/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecoverActivityIdRoute = AppRecoverActivityIdRouteImport.update({
+  id: '/recover/activity/$id',
+  path: '/recover/activity/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideArticleIdRoute = AppGuideArticleIdRouteImport.update({
+  id: '/guide/article/$id',
+  path: '/guide/article/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessResultIdRoute = AppAssessResultIdRouteImport.update({
+  id: '/assess/result/$id',
+  path: '/assess/result/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessQuestionsTypeRoute = AppAssessQuestionsTypeRouteImport.update({
+  id: '/assess/questions/$type',
+  path: '/assess/questions/$type',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessFollowupIdRoute = AppAssessFollowupIdRouteImport.update({
+  id: '/assess/followup/$id',
+  path: '/assess/followup/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessCarePlanIdRoute = AppAssessCarePlanIdRouteImport.update({
+  id: '/assess/care-plan/$id',
+  path: '/assess/care-plan/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/home': typeof AppHomeRoute
+  '/assess/activity': typeof AppAssessActivityRoute
+  '/assess/location': typeof AppAssessLocationRoute
+  '/assess/processing': typeof AppAssessProcessingRoute
+  '/assess/red-flag': typeof AppAssessRedFlagRoute
+  '/assess/safety': typeof AppAssessSafetyRoute
+  '/guide/saved': typeof AppGuideSavedRoute
+  '/guide/search': typeof AppGuideSearchRoute
+  '/history/$id': typeof AppHistoryIdRoute
+  '/history/insights': typeof AppHistoryInsightsRoute
+  '/history/progress': typeof AppHistoryProgressRoute
+  '/more/delete-account': typeof AppMoreDeleteAccountRoute
+  '/more/faq': typeof AppMoreFaqRoute
+  '/more/notifications': typeof AppMoreNotificationsRoute
+  '/more/privacy': typeof AppMorePrivacyRoute
+  '/more/profile': typeof AppMoreProfileRoute
+  '/more/references': typeof AppMoreReferencesRoute
+  '/more/settings': typeof AppMoreSettingsRoute
+  '/more/support': typeof AppMoreSupportRoute
+  '/assess/': typeof AppAssessIndexRoute
+  '/guide/': typeof AppGuideIndexRoute
+  '/history/': typeof AppHistoryIndexRoute
+  '/more/': typeof AppMoreIndexRoute
+  '/recover/': typeof AppRecoverIndexRoute
+  '/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
+  '/assess/followup/$id': typeof AppAssessFollowupIdRoute
+  '/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
+  '/assess/result/$id': typeof AppAssessResultIdRoute
+  '/guide/article/$id': typeof AppGuideArticleIdRoute
+  '/recover/activity/$id': typeof AppRecoverActivityIdRoute
+  '/recover/session/$id': typeof AppRecoverSessionIdRoute
+  '/recover/summary/$id': typeof AppRecoverSummaryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/home': typeof AppHomeRoute
+  '/assess/activity': typeof AppAssessActivityRoute
+  '/assess/location': typeof AppAssessLocationRoute
+  '/assess/processing': typeof AppAssessProcessingRoute
+  '/assess/red-flag': typeof AppAssessRedFlagRoute
+  '/assess/safety': typeof AppAssessSafetyRoute
+  '/guide/saved': typeof AppGuideSavedRoute
+  '/guide/search': typeof AppGuideSearchRoute
+  '/history/$id': typeof AppHistoryIdRoute
+  '/history/insights': typeof AppHistoryInsightsRoute
+  '/history/progress': typeof AppHistoryProgressRoute
+  '/more/delete-account': typeof AppMoreDeleteAccountRoute
+  '/more/faq': typeof AppMoreFaqRoute
+  '/more/notifications': typeof AppMoreNotificationsRoute
+  '/more/privacy': typeof AppMorePrivacyRoute
+  '/more/profile': typeof AppMoreProfileRoute
+  '/more/references': typeof AppMoreReferencesRoute
+  '/more/settings': typeof AppMoreSettingsRoute
+  '/more/support': typeof AppMoreSupportRoute
+  '/assess': typeof AppAssessIndexRoute
+  '/guide': typeof AppGuideIndexRoute
+  '/history': typeof AppHistoryIndexRoute
+  '/more': typeof AppMoreIndexRoute
+  '/recover': typeof AppRecoverIndexRoute
+  '/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
+  '/assess/followup/$id': typeof AppAssessFollowupIdRoute
+  '/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
+  '/assess/result/$id': typeof AppAssessResultIdRoute
+  '/guide/article/$id': typeof AppGuideArticleIdRoute
+  '/recover/activity/$id': typeof AppRecoverActivityIdRoute
+  '/recover/session/$id': typeof AppRecoverSessionIdRoute
+  '/recover/summary/$id': typeof AppRecoverSummaryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/disclaimer': typeof DisclaimerRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/_app/home': typeof AppHomeRoute
+  '/_app/assess/activity': typeof AppAssessActivityRoute
+  '/_app/assess/location': typeof AppAssessLocationRoute
+  '/_app/assess/processing': typeof AppAssessProcessingRoute
+  '/_app/assess/red-flag': typeof AppAssessRedFlagRoute
+  '/_app/assess/safety': typeof AppAssessSafetyRoute
+  '/_app/guide/saved': typeof AppGuideSavedRoute
+  '/_app/guide/search': typeof AppGuideSearchRoute
+  '/_app/history/$id': typeof AppHistoryIdRoute
+  '/_app/history/insights': typeof AppHistoryInsightsRoute
+  '/_app/history/progress': typeof AppHistoryProgressRoute
+  '/_app/more/delete-account': typeof AppMoreDeleteAccountRoute
+  '/_app/more/faq': typeof AppMoreFaqRoute
+  '/_app/more/notifications': typeof AppMoreNotificationsRoute
+  '/_app/more/privacy': typeof AppMorePrivacyRoute
+  '/_app/more/profile': typeof AppMoreProfileRoute
+  '/_app/more/references': typeof AppMoreReferencesRoute
+  '/_app/more/settings': typeof AppMoreSettingsRoute
+  '/_app/more/support': typeof AppMoreSupportRoute
+  '/_app/assess/': typeof AppAssessIndexRoute
+  '/_app/guide/': typeof AppGuideIndexRoute
+  '/_app/history/': typeof AppHistoryIndexRoute
+  '/_app/more/': typeof AppMoreIndexRoute
+  '/_app/recover/': typeof AppRecoverIndexRoute
+  '/_app/assess/care-plan/$id': typeof AppAssessCarePlanIdRoute
+  '/_app/assess/followup/$id': typeof AppAssessFollowupIdRoute
+  '/_app/assess/questions/$type': typeof AppAssessQuestionsTypeRoute
+  '/_app/assess/result/$id': typeof AppAssessResultIdRoute
+  '/_app/guide/article/$id': typeof AppGuideArticleIdRoute
+  '/_app/recover/activity/$id': typeof AppRecoverActivityIdRoute
+  '/_app/recover/session/$id': typeof AppRecoverSessionIdRoute
+  '/_app/recover/summary/$id': typeof AppRecoverSummaryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/disclaimer'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/home'
+    | '/assess/activity'
+    | '/assess/location'
+    | '/assess/processing'
+    | '/assess/red-flag'
+    | '/assess/safety'
+    | '/guide/saved'
+    | '/guide/search'
+    | '/history/$id'
+    | '/history/insights'
+    | '/history/progress'
+    | '/more/delete-account'
+    | '/more/faq'
+    | '/more/notifications'
+    | '/more/privacy'
+    | '/more/profile'
+    | '/more/references'
+    | '/more/settings'
+    | '/more/support'
+    | '/assess/'
+    | '/guide/'
+    | '/history/'
+    | '/more/'
+    | '/recover/'
+    | '/assess/care-plan/$id'
+    | '/assess/followup/$id'
+    | '/assess/questions/$type'
+    | '/assess/result/$id'
+    | '/guide/article/$id'
+    | '/recover/activity/$id'
+    | '/recover/session/$id'
+    | '/recover/summary/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/disclaimer'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/home'
+    | '/assess/activity'
+    | '/assess/location'
+    | '/assess/processing'
+    | '/assess/red-flag'
+    | '/assess/safety'
+    | '/guide/saved'
+    | '/guide/search'
+    | '/history/$id'
+    | '/history/insights'
+    | '/history/progress'
+    | '/more/delete-account'
+    | '/more/faq'
+    | '/more/notifications'
+    | '/more/privacy'
+    | '/more/profile'
+    | '/more/references'
+    | '/more/settings'
+    | '/more/support'
+    | '/assess'
+    | '/guide'
+    | '/history'
+    | '/more'
+    | '/recover'
+    | '/assess/care-plan/$id'
+    | '/assess/followup/$id'
+    | '/assess/questions/$type'
+    | '/assess/result/$id'
+    | '/guide/article/$id'
+    | '/recover/activity/$id'
+    | '/recover/session/$id'
+    | '/recover/summary/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/disclaimer'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/_app/home'
+    | '/_app/assess/activity'
+    | '/_app/assess/location'
+    | '/_app/assess/processing'
+    | '/_app/assess/red-flag'
+    | '/_app/assess/safety'
+    | '/_app/guide/saved'
+    | '/_app/guide/search'
+    | '/_app/history/$id'
+    | '/_app/history/insights'
+    | '/_app/history/progress'
+    | '/_app/more/delete-account'
+    | '/_app/more/faq'
+    | '/_app/more/notifications'
+    | '/_app/more/privacy'
+    | '/_app/more/profile'
+    | '/_app/more/references'
+    | '/_app/more/settings'
+    | '/_app/more/support'
+    | '/_app/assess/'
+    | '/_app/guide/'
+    | '/_app/history/'
+    | '/_app/more/'
+    | '/_app/recover/'
+    | '/_app/assess/care-plan/$id'
+    | '/_app/assess/followup/$id'
+    | '/_app/assess/questions/$type'
+    | '/_app/assess/result/$id'
+    | '/_app/guide/article/$id'
+    | '/_app/recover/activity/$id'
+    | '/_app/recover/session/$id'
+    | '/_app/recover/summary/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  DisclaimerRoute: typeof DisclaimerRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +531,312 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/home': {
+      id: '/_app/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AppHomeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/': {
+      id: '/_app/recover/'
+      path: '/recover'
+      fullPath: '/recover/'
+      preLoaderRoute: typeof AppRecoverIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/': {
+      id: '/_app/more/'
+      path: '/more'
+      fullPath: '/more/'
+      preLoaderRoute: typeof AppMoreIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/history/': {
+      id: '/_app/history/'
+      path: '/history'
+      fullPath: '/history/'
+      preLoaderRoute: typeof AppHistoryIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/': {
+      id: '/_app/guide/'
+      path: '/guide'
+      fullPath: '/guide/'
+      preLoaderRoute: typeof AppGuideIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/': {
+      id: '/_app/assess/'
+      path: '/assess'
+      fullPath: '/assess/'
+      preLoaderRoute: typeof AppAssessIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/support': {
+      id: '/_app/more/support'
+      path: '/more/support'
+      fullPath: '/more/support'
+      preLoaderRoute: typeof AppMoreSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/settings': {
+      id: '/_app/more/settings'
+      path: '/more/settings'
+      fullPath: '/more/settings'
+      preLoaderRoute: typeof AppMoreSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/references': {
+      id: '/_app/more/references'
+      path: '/more/references'
+      fullPath: '/more/references'
+      preLoaderRoute: typeof AppMoreReferencesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/profile': {
+      id: '/_app/more/profile'
+      path: '/more/profile'
+      fullPath: '/more/profile'
+      preLoaderRoute: typeof AppMoreProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/privacy': {
+      id: '/_app/more/privacy'
+      path: '/more/privacy'
+      fullPath: '/more/privacy'
+      preLoaderRoute: typeof AppMorePrivacyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/notifications': {
+      id: '/_app/more/notifications'
+      path: '/more/notifications'
+      fullPath: '/more/notifications'
+      preLoaderRoute: typeof AppMoreNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/faq': {
+      id: '/_app/more/faq'
+      path: '/more/faq'
+      fullPath: '/more/faq'
+      preLoaderRoute: typeof AppMoreFaqRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/more/delete-account': {
+      id: '/_app/more/delete-account'
+      path: '/more/delete-account'
+      fullPath: '/more/delete-account'
+      preLoaderRoute: typeof AppMoreDeleteAccountRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/history/progress': {
+      id: '/_app/history/progress'
+      path: '/history/progress'
+      fullPath: '/history/progress'
+      preLoaderRoute: typeof AppHistoryProgressRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/history/insights': {
+      id: '/_app/history/insights'
+      path: '/history/insights'
+      fullPath: '/history/insights'
+      preLoaderRoute: typeof AppHistoryInsightsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/history/$id': {
+      id: '/_app/history/$id'
+      path: '/history/$id'
+      fullPath: '/history/$id'
+      preLoaderRoute: typeof AppHistoryIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/search': {
+      id: '/_app/guide/search'
+      path: '/guide/search'
+      fullPath: '/guide/search'
+      preLoaderRoute: typeof AppGuideSearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/saved': {
+      id: '/_app/guide/saved'
+      path: '/guide/saved'
+      fullPath: '/guide/saved'
+      preLoaderRoute: typeof AppGuideSavedRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/safety': {
+      id: '/_app/assess/safety'
+      path: '/assess/safety'
+      fullPath: '/assess/safety'
+      preLoaderRoute: typeof AppAssessSafetyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/red-flag': {
+      id: '/_app/assess/red-flag'
+      path: '/assess/red-flag'
+      fullPath: '/assess/red-flag'
+      preLoaderRoute: typeof AppAssessRedFlagRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/processing': {
+      id: '/_app/assess/processing'
+      path: '/assess/processing'
+      fullPath: '/assess/processing'
+      preLoaderRoute: typeof AppAssessProcessingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/location': {
+      id: '/_app/assess/location'
+      path: '/assess/location'
+      fullPath: '/assess/location'
+      preLoaderRoute: typeof AppAssessLocationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/activity': {
+      id: '/_app/assess/activity'
+      path: '/assess/activity'
+      fullPath: '/assess/activity'
+      preLoaderRoute: typeof AppAssessActivityRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/summary/$id': {
+      id: '/_app/recover/summary/$id'
+      path: '/recover/summary/$id'
+      fullPath: '/recover/summary/$id'
+      preLoaderRoute: typeof AppRecoverSummaryIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/session/$id': {
+      id: '/_app/recover/session/$id'
+      path: '/recover/session/$id'
+      fullPath: '/recover/session/$id'
+      preLoaderRoute: typeof AppRecoverSessionIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/recover/activity/$id': {
+      id: '/_app/recover/activity/$id'
+      path: '/recover/activity/$id'
+      fullPath: '/recover/activity/$id'
+      preLoaderRoute: typeof AppRecoverActivityIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide/article/$id': {
+      id: '/_app/guide/article/$id'
+      path: '/guide/article/$id'
+      fullPath: '/guide/article/$id'
+      preLoaderRoute: typeof AppGuideArticleIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/result/$id': {
+      id: '/_app/assess/result/$id'
+      path: '/assess/result/$id'
+      fullPath: '/assess/result/$id'
+      preLoaderRoute: typeof AppAssessResultIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/questions/$type': {
+      id: '/_app/assess/questions/$type'
+      path: '/assess/questions/$type'
+      fullPath: '/assess/questions/$type'
+      preLoaderRoute: typeof AppAssessQuestionsTypeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/followup/$id': {
+      id: '/_app/assess/followup/$id'
+      path: '/assess/followup/$id'
+      fullPath: '/assess/followup/$id'
+      preLoaderRoute: typeof AppAssessFollowupIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assess/care-plan/$id': {
+      id: '/_app/assess/care-plan/$id'
+      path: '/assess/care-plan/$id'
+      fullPath: '/assess/care-plan/$id'
+      preLoaderRoute: typeof AppAssessCarePlanIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppHomeRoute: typeof AppHomeRoute
+  AppAssessActivityRoute: typeof AppAssessActivityRoute
+  AppAssessLocationRoute: typeof AppAssessLocationRoute
+  AppAssessProcessingRoute: typeof AppAssessProcessingRoute
+  AppAssessRedFlagRoute: typeof AppAssessRedFlagRoute
+  AppAssessSafetyRoute: typeof AppAssessSafetyRoute
+  AppGuideSavedRoute: typeof AppGuideSavedRoute
+  AppGuideSearchRoute: typeof AppGuideSearchRoute
+  AppHistoryIdRoute: typeof AppHistoryIdRoute
+  AppHistoryInsightsRoute: typeof AppHistoryInsightsRoute
+  AppHistoryProgressRoute: typeof AppHistoryProgressRoute
+  AppMoreDeleteAccountRoute: typeof AppMoreDeleteAccountRoute
+  AppMoreFaqRoute: typeof AppMoreFaqRoute
+  AppMoreNotificationsRoute: typeof AppMoreNotificationsRoute
+  AppMorePrivacyRoute: typeof AppMorePrivacyRoute
+  AppMoreProfileRoute: typeof AppMoreProfileRoute
+  AppMoreReferencesRoute: typeof AppMoreReferencesRoute
+  AppMoreSettingsRoute: typeof AppMoreSettingsRoute
+  AppMoreSupportRoute: typeof AppMoreSupportRoute
+  AppAssessIndexRoute: typeof AppAssessIndexRoute
+  AppGuideIndexRoute: typeof AppGuideIndexRoute
+  AppHistoryIndexRoute: typeof AppHistoryIndexRoute
+  AppMoreIndexRoute: typeof AppMoreIndexRoute
+  AppRecoverIndexRoute: typeof AppRecoverIndexRoute
+  AppAssessCarePlanIdRoute: typeof AppAssessCarePlanIdRoute
+  AppAssessFollowupIdRoute: typeof AppAssessFollowupIdRoute
+  AppAssessQuestionsTypeRoute: typeof AppAssessQuestionsTypeRoute
+  AppAssessResultIdRoute: typeof AppAssessResultIdRoute
+  AppGuideArticleIdRoute: typeof AppGuideArticleIdRoute
+  AppRecoverActivityIdRoute: typeof AppRecoverActivityIdRoute
+  AppRecoverSessionIdRoute: typeof AppRecoverSessionIdRoute
+  AppRecoverSummaryIdRoute: typeof AppRecoverSummaryIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppHomeRoute: AppHomeRoute,
+  AppAssessActivityRoute: AppAssessActivityRoute,
+  AppAssessLocationRoute: AppAssessLocationRoute,
+  AppAssessProcessingRoute: AppAssessProcessingRoute,
+  AppAssessRedFlagRoute: AppAssessRedFlagRoute,
+  AppAssessSafetyRoute: AppAssessSafetyRoute,
+  AppGuideSavedRoute: AppGuideSavedRoute,
+  AppGuideSearchRoute: AppGuideSearchRoute,
+  AppHistoryIdRoute: AppHistoryIdRoute,
+  AppHistoryInsightsRoute: AppHistoryInsightsRoute,
+  AppHistoryProgressRoute: AppHistoryProgressRoute,
+  AppMoreDeleteAccountRoute: AppMoreDeleteAccountRoute,
+  AppMoreFaqRoute: AppMoreFaqRoute,
+  AppMoreNotificationsRoute: AppMoreNotificationsRoute,
+  AppMorePrivacyRoute: AppMorePrivacyRoute,
+  AppMoreProfileRoute: AppMoreProfileRoute,
+  AppMoreReferencesRoute: AppMoreReferencesRoute,
+  AppMoreSettingsRoute: AppMoreSettingsRoute,
+  AppMoreSupportRoute: AppMoreSupportRoute,
+  AppAssessIndexRoute: AppAssessIndexRoute,
+  AppGuideIndexRoute: AppGuideIndexRoute,
+  AppHistoryIndexRoute: AppHistoryIndexRoute,
+  AppMoreIndexRoute: AppMoreIndexRoute,
+  AppRecoverIndexRoute: AppRecoverIndexRoute,
+  AppAssessCarePlanIdRoute: AppAssessCarePlanIdRoute,
+  AppAssessFollowupIdRoute: AppAssessFollowupIdRoute,
+  AppAssessQuestionsTypeRoute: AppAssessQuestionsTypeRoute,
+  AppAssessResultIdRoute: AppAssessResultIdRoute,
+  AppGuideArticleIdRoute: AppGuideArticleIdRoute,
+  AppRecoverActivityIdRoute: AppRecoverActivityIdRoute,
+  AppRecoverSessionIdRoute: AppRecoverSessionIdRoute,
+  AppRecoverSummaryIdRoute: AppRecoverSummaryIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  DisclaimerRoute: DisclaimerRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
