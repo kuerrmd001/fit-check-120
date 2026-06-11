@@ -1,11 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import {
-  ClipboardCheck,
-  HeartPulse,
-  BookOpen,
-  History,
-  Menu,
-} from "lucide-react";
+import { ClipboardCheck, HeartPulse, BookOpen, History, Menu } from "lucide-react";
 
 const TABS = [
   { to: "/assess", label: "ประเมิน", icon: ClipboardCheck },
@@ -20,10 +14,10 @@ export function BottomNavigation() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-md border-t border-border bg-card/95 backdrop-blur"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto max-w-md px-3 pb-3"
+      style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 0.75rem)" }}
     >
-      <ul className="grid grid-cols-5">
+      <ul className="pointer-events-auto grid grid-cols-5 rounded-[28px] border border-border/70 bg-card/95 p-1.5 shadow-[0_20px_48px_-28px_oklch(0.35_0.06_220_/_0.35)] backdrop-blur">
         {TABS.map((t) => {
           const active = path === t.to || path.startsWith(t.to + "/");
           const Icon = t.icon;
@@ -31,8 +25,8 @@ export function BottomNavigation() {
             <li key={t.to}>
               <Link
                 to={t.to}
-                className={`flex flex-col items-center gap-1 py-2.5 text-[11px] transition ${
-                  active ? "text-primary" : "text-navy-soft"
+                className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-[22px] px-1 text-[11px] transition ${
+                  active ? "bg-primary-soft text-primary" : "text-navy-soft hover:bg-muted/70"
                 }`}
               >
                 <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
