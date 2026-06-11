@@ -20,10 +20,10 @@ function Page() {
       <AppHeader title="เริ่มประเมิน" />
       <div className="flex-1 space-y-4 px-4 pb-6">
         <Card className="bg-gradient-to-br from-primary to-[oklch(0.55_0.14_180)] text-white">
-          <h2 className="text-base font-bold">การประเมินอาการบาดเจ็บเบื้องต้น</h2>
+          <h2 className="text-base font-bold">ประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย</h2>
           <p className="mt-1 text-sm opacity-90">
-            Fit Check ช่วยประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย
-            โดยเวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน
+            Fit Check เป็นเครื่องมือคัดกรองเบื้องต้น ไม่ใช่การวินิจฉัย
+            เวอร์ชันต้นแบบนี้ประเมินอาการปวดหลังล่างได้ละเอียดก่อน
           </p>
           <p className="mt-2 text-xs opacity-80">ใช้เวลาประมาณ 2-3 นาที</p>
         </Card>
@@ -34,7 +34,7 @@ function Page() {
             size="lg"
             className="min-h-14 text-base font-bold shadow-[0_18px_36px_-18px_oklch(0.55_0.14_180_/_0.65)]"
           >
-            เริ่มประเมินอาการบาดเจ็บ
+            เริ่มประเมินอาการ
           </Button>
         </Link>
 
@@ -45,17 +45,20 @@ function Page() {
         <div className="space-y-2">
           {[
             "1. เลือกอาการหลัก 1 ตำแหน่งก่อน",
-            "2. ตรวจสัญญาณอันตราย (Safety Check)",
+            "2. ตอบคำถาม Safety Check",
             "3. เลือกกิจกรรมที่เกี่ยวข้อง",
             "4. ตอบคำถามเรื่องอาการ",
             "5. รับผลและคำแนะนำเบื้องต้น",
           ].map((s, i) => (
-            <Card key={i} className="flex items-center gap-3 bg-muted/50 py-3 shadow-none">
+            <div
+              key={i}
+              className="flex items-center gap-3 rounded-2xl border border-border bg-muted/40 px-4 py-3"
+            >
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft text-xs font-semibold text-primary">
                 {i + 1}
               </span>
               <span className="text-sm text-navy">{s.replace(/^\d+\.\s*/, "")}</span>
-            </Card>
+            </div>
           ))}
         </div>
 
@@ -67,7 +70,7 @@ function Page() {
 
         <Link to="/assess/location">
           <Button full size="lg">
-            เริ่มประเมินอาการบาดเจ็บ
+            เริ่มประเมินอาการ
           </Button>
         </Link>
       </div>
