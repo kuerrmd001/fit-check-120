@@ -413,11 +413,18 @@ const BANKS: Record<ActivityType, Q[]> = {
   unsure: UNSURE,
 };
 
+function normalizeActivityType(type: string): ActivityType {
+  if (type === "running") return "running";
+  if (type === "weight" || type === "weights") return "weights";
+  return "unsure";
+}
+
 function Page() {
   const { type } = useParams({ from: "/_app/assess/questions/$type" });
   const nav = useNavigate();
   const draft = useDraft();
-  const questions = BANKS[type as ActivityType] ?? UNSURE;
+  const activityType = normalizeActivityType(type);
+  const questions = BANKS[activityType];
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [exerciseHelp, setExerciseHelp] = useState<ExerciseHelpKey | null>(null);
 
@@ -436,6 +443,9 @@ function Page() {
   const allAnswered = questions.every((q) => answers[q.key] !== undefined);
 
   const onSubmit = () => {
+    if (draft.activity !== activityType) {
+      draft.setActivity(activityType);
+    }
     const unsureCount = Object.values(answers).filter((v) =>
       String(v).toLowerCase().includes("unsure"),
     ).length;
@@ -443,14 +453,18 @@ function Page() {
   };
 
   const title =
-    type === "running" ? "วิ่ง / Cardio" : type === "weights" ? "Weight Training" : "ไม่แน่ใจ";
+    activityType === "running"
+      ? "วิ่ง / Cardio"
+      : activityType === "weights"
+        ? "Weight Training"
+        : "ไม่แน่ใจ";
 
   return (
     <>
       <AppHeader title={title} back />
       <ProgressSteps step={4} total={5} />
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-6">
-        {type === "weights" && (
+        {activityType === "weights" && (
           <Card className="space-y-2 rounded-[26px] border-primary/15 bg-primary-soft/60">
             <p className="text-sm font-bold text-navy">เลือกท่าหลักที่กระตุ้นอาการมากที่สุด</p>
             <p className="text-sm leading-6 text-navy-soft">
