@@ -10,8 +10,10 @@ import {
   ChevronRight,
   ClipboardCheck,
   HeartPulse,
+  Info,
   ShieldCheck,
   TrendingUp,
+  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { AssessmentRecord } from "@/lib/assessment/types";
@@ -24,9 +26,31 @@ function activityLabel(activity: AssessmentRecord["activity"]) {
   return "ไม่แน่ใจ";
 }
 
+const RISK_EXPLANATIONS = [
+  {
+    label: "เขียว",
+    title: "ติดตามต่อ",
+    desc: "อาการดูไม่เข้ากับสัญญาณที่ควรระวัง แต่ยังควรสังเกตอาการ",
+    className: "border-risk-green/25 bg-risk-green-soft text-risk-green",
+  },
+  {
+    label: "เหลือง",
+    title: "ลดความหนัก",
+    desc: "ควรพัก ลดกิจกรรมที่กระตุ้น และติดตามอาการใน 24-48 ชั่วโมง",
+    className: "border-risk-yellow/30 bg-risk-yellow-soft text-risk-yellow",
+  },
+  {
+    label: "แดง",
+    title: "พบผู้เชี่ยวชาญ",
+    desc: "มีคำตอบที่ควรได้รับการประเมินเพิ่มเติมจากผู้เชี่ยวชาญ",
+    className: "border-risk-red/25 bg-risk-red-soft text-risk-red",
+  },
+];
+
 function Home() {
   const [list, setList] = useState<AssessmentRecord[]>([]);
   const [name, setName] = useState("ผู้ใช้");
+  const [infoOpen, setInfoOpen] = useState(false);
   useEffect(() => {
     setList(store.getAssessments());
     const a = store.getAuth();
@@ -62,17 +86,52 @@ function Home() {
           <p className="text-xs font-semibold opacity-90">เริ่มประเมินอาการบาดเจ็บ</p>
           <h2 className="mt-1 text-2xl font-bold leading-tight">ประเมินอาการบาดเจ็บเบื้องต้น</h2>
           <p className="mt-2 text-sm leading-6 opacity-90">
-            เวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน ใช้เวลาประมาณ 2-3 นาที
-            พร้อมคัดกรองสัญญาณที่ควรระวังเสมอ
+            เครื่องมือคัดกรองเบื้องต้นจากการออกกำลังกาย
+            เวอร์ชันต้นแบบนี้ประเมินอาการปวดหลังล่างได้ละเอียดก่อน
           </p>
-          <Link
-            to="/assess"
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-primary shadow-soft"
-          >
-            เริ่มประเมินอาการบาดเจ็บ <ChevronRight className="h-4 w-4" />
-          </Link>
+          <div className="mt-4 grid gap-2">
+            <Link
+              to="/assess"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-primary shadow-soft"
+            >
+              เริ่มประเมินอาการ <ChevronRight className="h-4 w-4" />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setInfoOpen(true)}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/12 px-4 py-3 text-center text-sm font-semibold text-white"
+            >
+              <Info className="h-4 w-4" />
+              Fit Check ใช้ทำอะไร?
+            </button>
+          </div>
+          <p className="mt-3 text-xs leading-5 opacity-85">
+            Fit Check ไม่ใช่การวินิจฉัยหรือการรักษาแทนแพทย์
+          </p>
         </div>
       </Card>
+
+      <section className="mt-5">
+        <h3 className="mb-2 text-sm font-semibold text-navy">สรุประดับผลประเมิน</h3>
+        <div className="grid gap-2">
+          {RISK_EXPLANATIONS.map((item) => (
+            <div
+              key={item.label}
+              className={`rounded-[22px] border p-3 shadow-soft ${item.className}`}
+            >
+              <div className="flex items-start gap-3">
+                <span className="rounded-full bg-white/70 px-2.5 py-1 text-xs font-bold">
+                  {item.label}
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-navy">{item.title}</p>
+                  <p className="mt-1 text-xs leading-5 text-navy-soft">{item.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="mt-5 grid grid-cols-3 gap-2">
         {[
@@ -205,6 +264,50 @@ function Home() {
       <div className="mt-5 flex items-start gap-2 rounded-[24px] bg-primary-soft px-4 py-3 text-xs leading-5 text-navy">
         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
         <span>Fit Check ให้ข้อมูลทั่วไปเท่านั้น ไม่ใช่การวินิจฉัยหรือการรักษาแทนแพทย์</span>
+      </div>
+
+      {infoOpen && <FitCheckInfoModal onClose={() => setInfoOpen(false)} />}
+    </div>
+  );
+}
+
+function FitCheckInfoModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-navy/35 px-4 pb-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="fit-check-info-title"
+    >
+      <div className="w-full max-w-sm rounded-[28px] border border-border bg-card p-5 shadow-card">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold text-primary">Fit Check</p>
+            <h2 id="fit-check-info-title" className="mt-1 text-lg font-bold text-navy">
+              Fit Check ใช้ทำอะไร?
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-navy-soft"
+            aria-label="ปิด"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-navy-soft">
+          Fit Check ไม่ได้ใช้แทนแพทย์ แต่ช่วยประเมินอาการเบื้องต้นจากคำตอบของคุณ
+          เพื่อช่วยให้ตัดสินใจได้ว่าอาการควรดูแลเบื้องต้น พักและติดตาม หรือควรพบผู้เชี่ยวชาญ
+          หากมีอาการรุนแรงหรือไม่แน่ใจ ควรติดต่อแพทย์หรือนักกายภาพบำบัด
+        </p>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-5 flex w-full items-center justify-center rounded-2xl bg-primary px-5 py-3.5 text-base font-semibold text-white shadow-soft"
+        >
+          เข้าใจแล้ว
+        </button>
       </div>
     </div>
   );
