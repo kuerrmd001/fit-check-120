@@ -39,7 +39,7 @@ function Page() {
       />
       <div className="flex-1 space-y-4 px-4 pb-6">
         <Card className="rounded-[30px] border-primary/15 bg-primary-soft/70 p-5 shadow-[0_20px_50px_-34px_oklch(0.45_0.08_190)]">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-xs font-bold text-primary">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-card/80 px-3 py-1 text-xs font-bold text-primary">
             <Clock className="h-4 w-4" />
             อ่าน {article.readMin} นาที · {category?.name}
           </div>
@@ -56,7 +56,7 @@ function Page() {
         </AlertBox>
 
         {article.sections.map((s, i) => (
-          <Card key={i} className="rounded-[26px] border-border/70 bg-white p-5 shadow-soft">
+          <Card key={i} className="rounded-[26px] border-border/70 bg-card p-5 shadow-soft">
             <div className="mb-3 flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-primary" />
               <h3 className="text-sm font-semibold text-navy">{s.heading}</h3>
@@ -72,7 +72,7 @@ function Page() {
           </Card>
         ))}
 
-        <Card className="rounded-[26px] border-border/70 bg-white p-5 shadow-soft">
+        <Card className="rounded-[26px] border-border/70 bg-card p-5 shadow-soft">
           <p className="text-sm font-semibold text-navy">บทความนี้มีประโยชน์หรือไม่?</p>
           <div className="mt-3 flex gap-2">
             <Button
