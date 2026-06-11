@@ -18,12 +18,12 @@ function Page() {
       <AppHeader title="บทความที่บันทึกไว้" back />
       <div className="flex-1 space-y-4 px-4 pb-6">
         <Card className="rounded-[30px] border-primary/15 bg-primary-soft/70 p-5 shadow-[0_20px_50px_-34px_oklch(0.45_0.08_190)]">
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-[20px] bg-white/80 text-primary">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-[20px] bg-card/80 text-primary">
             <Bookmark className="h-6 w-6" />
           </div>
           <h2 className="text-xl font-bold text-navy">คลังบทความของคุณ</h2>
           <p className="mt-2 text-sm leading-relaxed text-navy-soft">
-            เก็บบทความที่อยากกลับมาอ่านซ้ำเรื่องการดูแลอาการและการฟื้นตัว
+            เก็บบทความที่อยากกลับมาอ่านซ้ำเรื่องการดูแลอาการและการพักฟื้น
           </p>
         </Card>
 
@@ -37,7 +37,7 @@ function Page() {
           <div className="space-y-2.5">
             {items.map((a) => (
               <Link key={a.id} to="/guide/article/$id" params={{ id: a.id }}>
-                <Card className="flex items-center gap-3 rounded-[24px] border-border/70 bg-white p-4 shadow-soft">
+                <Card className="flex items-center gap-3 rounded-[24px] border-border/70 bg-card p-4 shadow-soft">
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-navy">{a.title}</p>
                     <p className="mt-1 text-xs leading-relaxed text-navy-soft">{a.summary}</p>

@@ -34,19 +34,19 @@ const DEFAULT_SETTINGS: Settings = {
 const APPEARANCE_OPTIONS = [
   {
     value: "light",
-    label: "Light mode",
+    label: "โหมดสว่าง",
     detail: "พื้นหลังสว่าง อ่านง่าย",
     icon: Sun,
   },
   {
     value: "dark",
-    label: "Dark mode",
+    label: "โหมดมืด",
     detail: "ลดแสงจ้าในที่มืด",
     icon: Moon,
   },
   {
     value: "system",
-    label: "System preference",
+    label: "ตามระบบเครื่อง",
     detail: "ตามการตั้งค่าของอุปกรณ์",
     icon: Monitor,
   },
@@ -133,9 +133,9 @@ function Page() {
                 <Palette className="h-4 w-4" />
               </span>
               <div>
-                <p className="text-sm font-semibold text-navy">Appearance</p>
+                <p className="text-sm font-semibold text-navy">ธีมหน้าจอ</p>
                 <p className="mt-0.5 text-xs leading-5 text-navy-soft">
-                  ค่าเริ่มต้นคือ Light mode และจะบันทึกไว้ในเครื่องนี้
+                  ค่าเริ่มต้นคือโหมดสว่าง และจะบันทึกไว้ในเครื่องนี้
                 </p>
               </div>
             </div>
