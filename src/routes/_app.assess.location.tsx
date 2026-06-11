@@ -69,6 +69,16 @@ function Page() {
           </p>
         </section>
 
+        <Card className="space-y-1 rounded-[24px] border-primary/15 bg-primary-soft/60 shadow-none">
+          <p className="text-sm font-bold text-navy">เลือกอาการหลัก 1 ตำแหน่งก่อน</p>
+          <p className="text-sm leading-6 text-navy-soft">
+            หากมีตำแหน่งอื่นร่วมด้วย สามารถบันทึกเป็นข้อมูลเพิ่มเติมได้ในอนาคต
+          </p>
+          <p className="text-sm leading-6 text-navy-soft">
+            ผลประเมินรอบนี้จะอิงจากอาการหลักที่เลือก
+          </p>
+        </Card>
+
         <Card className="rounded-[28px] bg-white p-4">
           <div className="grid grid-cols-2 gap-3">
             <BodyPanel
