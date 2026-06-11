@@ -36,10 +36,10 @@ function Splash() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             Fit Check
           </p>
-          <h1 className="mt-2 text-3xl font-bold text-navy">ประเมินก่อนกลับไปขยับ</h1>
+          <h1 className="mt-2 text-3xl font-bold text-navy">ประเมินอาการบาดเจ็บเบื้องต้น</h1>
           <p className="mt-3 text-sm leading-7 text-navy-soft">
-            Fit Check ช่วยประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย
-            โดยเวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน
+            Fit Check เป็นเครื่องมือคัดกรองเบื้องต้นจากคำตอบของคุณ
+            โดยเวอร์ชันต้นแบบนี้ประเมินอาการปวดหลังล่างได้ละเอียดก่อน
           </p>
 
           <div className="mt-6 grid w-full gap-2 text-left">
