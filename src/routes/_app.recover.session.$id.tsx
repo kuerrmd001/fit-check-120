@@ -29,7 +29,7 @@ const SESSIONS: Record<string, { title: string; duration: number; steps: string[
       tip: "พยุงตัวได้และไม่บิดหลังแรง",
     },
     walk: {
-      title: "เดินฟื้นฟู",
+      title: "เดินเบา ๆ",
       duration: 900,
       steps: ["เดินช้า", "เดินสบาย", "สังเกตอาการ", "ผ่อนความเร็ว"],
       tip: "เลือกพื้นเรียบและหยุดพักหากอาการเพิ่ม",
@@ -64,7 +64,7 @@ function Page() {
 
   return (
     <>
-      <AppHeader title="เซสชันฟื้นฟู" subtitle={session.title} back />
+      <AppHeader title="เซสชันขยับเบา ๆ" subtitle={session.title} back />
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-7">
         <Card className="rounded-[30px] border-primary/15 bg-primary-soft/70 text-center">
           <p className="text-xs font-semibold text-primary">เวลาที่ผ่านไป</p>
