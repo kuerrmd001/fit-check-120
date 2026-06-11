@@ -57,16 +57,17 @@ function Home() {
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/18">
             <ClipboardCheck className="h-6 w-6" />
           </div>
-          <p className="text-xs font-semibold opacity-90">เริ่มประเมินอาการ</p>
-          <h2 className="mt-1 text-2xl font-bold leading-tight">เช็กอาการปวดหลังส่วนล่าง</h2>
+          <p className="text-xs font-semibold opacity-90">เริ่มประเมินอาการบาดเจ็บ</p>
+          <h2 className="mt-1 text-2xl font-bold leading-tight">ประเมินอาการบาดเจ็บเบื้องต้น</h2>
           <p className="mt-2 text-sm leading-6 opacity-90">
-            ใช้เวลาประมาณ 2-3 นาที พร้อมคัดกรองสัญญาณที่ควรระวังก่อนเสมอ
+            เวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน ใช้เวลาประมาณ 2-3 นาที
+            พร้อมคัดกรองสัญญาณที่ควรระวังเสมอ
           </p>
           <Link
             to="/assess"
             className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-primary shadow-soft"
           >
-            เริ่มประเมินอาการ <ChevronRight className="h-4 w-4" />
+            เริ่มประเมินอาการบาดเจ็บ <ChevronRight className="h-4 w-4" />
           </Link>
         </div>
       </Card>

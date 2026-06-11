@@ -77,16 +77,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Fit Check — ประเมินอาการปวดหลังเบื้องต้น" },
-      { name: "description", content: "Fit Check แอปช่วยประเมินอาการปวดหลังจากการออกกำลังกายเบื้องต้น สำหรับนักศึกษาและคนรักสุขภาพ" },
+      { title: "Fit Check — ประเมินอาการบาดเจ็บเบื้องต้น" },
+      {
+        name: "description",
+        content:
+          "Fit Check ช่วยประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย โดยเวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน",
+      },
       { name: "theme-color", content: "#0fb5a8" },
-      { property: "og:title", content: "Fit Check — ประเมินอาการปวดหลังเบื้องต้น" },
-      { property: "og:description", content: "Fit Check แอปช่วยประเมินอาการปวดหลังจากการออกกำลังกายเบื้องต้น สำหรับนักศึกษาและคนรักสุขภาพ" },
+      { property: "og:title", content: "Fit Check — ประเมินอาการบาดเจ็บเบื้องต้น" },
+      {
+        property: "og:description",
+        content:
+          "Fit Check ช่วยประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย โดยเวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Fit Check — ประเมินอาการปวดหลังเบื้องต้น" },
-      { name: "twitter:description", content: "Fit Check แอปช่วยประเมินอาการปวดหลังจากการออกกำลังกายเบื้องต้น สำหรับนักศึกษาและคนรักสุขภาพ" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/124bb400-baef-41f3-8d36-ef6635efa0f8/id-preview-d3dae5fb--88129d72-465f-4224-af0a-63dc65d41c1e.lovable.app-1781090355195.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/124bb400-baef-41f3-8d36-ef6635efa0f8/id-preview-d3dae5fb--88129d72-465f-4224-af0a-63dc65d41c1e.lovable.app-1781090355195.png" },
+      { name: "twitter:title", content: "Fit Check — ประเมินอาการบาดเจ็บเบื้องต้น" },
+      {
+        name: "twitter:description",
+        content:
+          "Fit Check ช่วยประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย โดยเวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/124bb400-baef-41f3-8d36-ef6635efa0f8/id-preview-d3dae5fb--88129d72-465f-4224-af0a-63dc65d41c1e.lovable.app-1781090355195.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/124bb400-baef-41f3-8d36-ef6635efa0f8/id-preview-d3dae5fb--88129d72-465f-4224-af0a-63dc65d41c1e.lovable.app-1781090355195.png",
+      },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
