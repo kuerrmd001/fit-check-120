@@ -25,14 +25,16 @@ const OPTIONS: { v: SafetyAnswer; label: string; tone?: "danger" }[] = [
   { v: "yes", label: "มี", tone: "danger" },
 ];
 
+function isRiskyAnswer(answer: SafetyAnswer) {
+  return answer !== "no";
+}
+
 function Page() {
   const nav = useNavigate();
   const { safety, setSafety } = useDraft();
 
   const handleAnswer = (key: keyof SafetyAnswers, answer: SafetyAnswer) => {
-    const nextSafety = { ...safety, [key]: answer };
     setSafety({ [key]: answer });
-    if (hasRedFlag(nextSafety)) nav({ to: "/assess/red-flag" });
   };
 
   const onNext = () => {
@@ -48,9 +50,10 @@ function Page() {
         back
       />
       <ProgressSteps step={2} total={5} label="Safety Check" />
-      <div className="flex-1 space-y-4 px-4 pb-6">
+      <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-6">
         <AlertBox tone="info" title="ตอบตามอาการจริง">
-          หากมีอาการเหล่านี้หรือไม่แน่ใจ แอปจะแสดงคำเตือนและแนะนำให้พบผู้เชี่ยวชาญทันที
+          คุณสามารถตรวจและแก้คำตอบได้ก่อนกดไปต่อ หากยังมีคำตอบ “มี” หรือ “ไม่แน่ใจ”
+          แอปจะแสดงคำเตือนและแนะนำให้พบผู้เชี่ยวชาญ
         </AlertBox>
         {QUESTIONS.map((q, i) => (
           <QuestionCard key={q.key} number={i + 1} total={QUESTIONS.length} question={q.q}>
@@ -64,10 +67,15 @@ function Page() {
                 {o.label}
               </OptionButton>
             ))}
+            {isRiskyAnswer(safety[q.key]) && (
+              <div className="mt-3 rounded-2xl border border-risk-yellow/30 bg-risk-yellow-soft px-3 py-2 text-xs leading-5 text-navy">
+                คำตอบนี้อาจทำให้ระบบแนะนำให้พบผู้เชี่ยวชาญ กรุณาตรวจให้แน่ใจก่อนกดถัดไป
+              </div>
+            )}
           </QuestionCard>
         ))}
         <Button full size="lg" onClick={onNext}>
-          ถัดไป
+          ตรวจคำตอบและไปต่อ
         </Button>
       </div>
     </>
