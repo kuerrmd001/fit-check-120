@@ -40,7 +40,9 @@ function Home() {
         <div>
           <p className="text-xs font-medium text-primary">Fit Check</p>
           <h1 className="text-2xl font-bold text-navy">สวัสดี {name}</h1>
-          <p className="mt-1 text-sm text-navy-soft">วันนี้ลองเช็กอาการและแผนฟื้นฟูของคุณกัน</p>
+          <p className="mt-1 text-sm text-navy-soft">
+            วันนี้ลองเช็กอาการและแนวทางขยับเบา ๆ ของคุณกัน
+          </p>
         </div>
         <Link
           to="/more/notifications"
@@ -65,7 +67,7 @@ function Home() {
           </p>
           <Link
             to="/assess"
-            className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-primary shadow-soft"
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-primary shadow-soft"
           >
             เริ่มประเมินอาการบาดเจ็บ <ChevronRight className="h-4 w-4" />
           </Link>
@@ -76,7 +78,7 @@ function Home() {
         {[
           { label: "ประเมิน", value: `${list.length}`, icon: ClipboardCheck },
           { label: "ติดตาม", value: latest ? "24-48 ชม." : "เริ่มได้", icon: CalendarClock },
-          { label: "ฟื้นฟู", value: "เบา ๆ", icon: HeartPulse },
+          { label: "ขยับ", value: "เบา ๆ", icon: HeartPulse },
         ].map((item) => {
           const Icon = item.icon;
           return (
@@ -168,7 +170,7 @@ function Home() {
           {
             to: "/recover" as const,
             icon: HeartPulse,
-            label: "แผนฟื้นฟู",
+            label: "ขยับเบา ๆ",
             desc: "กิจกรรมเบา ๆ",
           },
           { to: "/guide" as const, icon: BookOpen, label: "คู่มือ", desc: "อ่านคำแนะนำ" },
