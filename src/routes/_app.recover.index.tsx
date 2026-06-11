@@ -37,7 +37,7 @@ const ACTIVITIES = [
   },
   {
     id: "walk",
-    title: "เดินฟื้นฟู",
+    title: "เดินเบา ๆ",
     duration: "15 นาที",
     level: "เบา",
     note: "เดินสบาย ๆ และสังเกตอาการระหว่างทาง",
@@ -54,7 +54,7 @@ const ACTIVITIES = [
 function Page() {
   return (
     <>
-      <AppHeader title="แผนฟื้นฟู" subtitle="กิจกรรมเบา ๆ และติดตามอาการอย่างระมัดระวัง" />
+      <AppHeader title="แนวทางขยับเบา ๆ" subtitle="กิจกรรมทั่วไปและติดตามอาการอย่างระมัดระวัง" />
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-7">
         <Card className="rounded-[30px] border-primary/15 bg-primary-soft/70">
           <div className="flex items-start gap-3">
@@ -62,7 +62,7 @@ function Page() {
               <HeartPulse className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-xs font-semibold text-primary">แผนฟื้นฟู</p>
+              <p className="text-xs font-semibold text-primary">แนวทางขยับเบา ๆ</p>
               <h1 className="mt-1 text-xl font-bold text-navy">ค่อย ๆ กลับไปขยับตามอาการ</h1>
               <p className="mt-2 text-sm leading-6 text-navy-soft">
                 เลือกกิจกรรมเบา ๆ สังเกตอาการระหว่างทำ และหยุดทันทีหากปวดเพิ่มหรือมีอาการผิดปกติ
