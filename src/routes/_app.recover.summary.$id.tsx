@@ -12,7 +12,7 @@ const ACTIVITY_TITLE: Record<string, string> = {
   stretch: "ยืดเหยียดหลังล่าง",
   core: "แกนกลางลำตัวเบื้องต้น",
   mobility: "การเคลื่อนไหวสะโพก",
-  walk: "เดินฟื้นฟู",
+  walk: "เดินเบา ๆ",
   hipthrust: "กระตุ้นกล้ามเนื้อสะโพก",
 };
 
@@ -20,7 +20,7 @@ function Page() {
   const { id } = useParams({ from: "/_app/recover/summary/$id" });
   const [feedback, setFeedback] = useState("เท่าเดิม");
   const [saved, setSaved] = useState(false);
-  const title = ACTIVITY_TITLE[id] ?? "กิจกรรมฟื้นฟู";
+  const title = ACTIVITY_TITLE[id] ?? "กิจกรรมขยับเบา ๆ";
 
   return (
     <>
@@ -31,7 +31,7 @@ function Page() {
             <CheckCircle2 className="h-8 w-8" />
           </div>
           <p className="mt-4 text-xs font-semibold text-risk-green">เสร็จสิ้น</p>
-          <h1 className="mt-1 text-2xl font-bold text-navy">คุณทำเซสชันฟื้นฟูครบแล้ว</h1>
+          <h1 className="mt-1 text-2xl font-bold text-navy">คุณทำเซสชันขยับเบา ๆ ครบแล้ว</h1>
           <p className="mt-2 text-sm leading-6 text-navy-soft">
             บันทึกความรู้สึกหลังทำ เพื่อใช้สังเกตแนวโน้มในการกลับไปขยับครั้งต่อไป
           </p>
@@ -104,7 +104,7 @@ function Page() {
             to="/recover"
             className="flex w-full items-center justify-center rounded-2xl border border-border bg-white px-5 py-3.5 text-base font-medium text-navy shadow-soft"
           >
-            กลับไปแผนฟื้นฟู
+            กลับไปแนวทางขยับเบา ๆ
           </Link>
         </div>
       </div>

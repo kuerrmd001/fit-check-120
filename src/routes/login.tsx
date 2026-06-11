@@ -29,7 +29,7 @@ function Page() {
           </div>
           <h1 className="mt-4 text-2xl font-bold text-navy">ยินดีต้อนรับกลับมา</h1>
           <p className="mt-2 text-sm leading-6 text-navy-soft">
-            เข้าสู่ระบบเพื่อบันทึกประวัติการประเมิน แผนฟื้นฟู และการติดตามอาการของคุณ
+            เข้าสู่ระบบเพื่อบันทึกประวัติการประเมิน แนวทางขยับเบา ๆ และการติดตามอาการของคุณ
           </p>
         </div>
 
@@ -93,7 +93,7 @@ function Page() {
             <div className="flex-1">
               <h2 className="text-sm font-semibold text-navy">โหมดผู้เยี่ยมชม</h2>
               <p className="mt-1 text-xs leading-5 text-navy-soft">
-                ทดลองใช้งานได้ทันที เหมาะสำหรับดูขั้นตอนประเมินและแผนฟื้นฟูเบื้องต้น
+                ทดลองใช้งานได้ทันที เหมาะสำหรับดูขั้นตอนประเมินและแนวทางขยับเบา ๆ เบื้องต้น
               </p>
             </div>
           </div>

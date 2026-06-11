@@ -46,7 +46,7 @@ function Splash() {
             {[
               "คัดกรองสัญญาณที่ควรระวังก่อน",
               "ดูระดับความเสี่ยงแบบเข้าใจง่าย",
-              "ติดตามอาการและแผนฟื้นฟูเบื้องต้น",
+              "ติดตามอาการและแนวทางขยับเบา ๆ เบื้องต้น",
             ].map((item) => (
               <div
                 key={item}
@@ -66,7 +66,7 @@ function Splash() {
             <div className="h-full w-1/2 animate-pulse rounded-full bg-primary" />
           </div>
           <p className="mt-3 text-xs text-navy-soft">
-            Fit Check ให้ข้อมูลทั่วไป ไม่ใช่การวินิจฉัยทางการแพทย์
+            Fit Check ให้ข้อมูลทั่วไป ไม่ใช่การวินิจฉัยหรือการรักษาแทนแพทย์
           </p>
         </div>
       </div>

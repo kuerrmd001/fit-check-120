@@ -55,11 +55,11 @@ const DETAILS: Record<
     cautions: ["ไม่บิดหลังแรง", "ใช้มือพยุงได้ถ้าทรงตัวไม่มั่นคง"],
   },
   walk: {
-    title: "เดินฟื้นฟู",
+    title: "เดินเบา ๆ",
     duration: "15 นาที",
     level: "เบา",
     goal: "กลับไปขยับแบบต่อเนื่องด้วยความหนักต่ำและสังเกตอาการ",
-    benefits: ["ปรับความเร็วได้", "ติดตามอาการง่าย", "เหมาะกับวันเริ่มฟื้นตัว"],
+    benefits: ["ปรับความเร็วได้", "ติดตามอาการง่าย", "เหมาะกับวันที่อยากเริ่มขยับ"],
     steps: ["เดินช้า 3 นาที", "เดินสบาย 10 นาที", "ผ่อนความเร็ว 2 นาที"],
     cautions: ["เลือกพื้นเรียบ", "หยุดพักหากอาการปวดเพิ่ม"],
   },
@@ -83,7 +83,7 @@ function Page() {
       <AppHeader title="รายละเอียดกิจกรรม" subtitle="อ่านเป้าหมายและข้อควรระวังก่อนเริ่ม" back />
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-7">
         <Card className="rounded-[30px] border-primary/15 bg-primary-soft/70">
-          <p className="text-xs font-semibold text-primary">กิจกรรมฟื้นฟู</p>
+          <p className="text-xs font-semibold text-primary">กิจกรรมขยับเบา ๆ</p>
           <h1 className="mt-1 text-2xl font-bold text-navy">{activity.title}</h1>
           <div className="mt-4 grid grid-cols-2 gap-2">
             <div className="rounded-2xl bg-white p-3 shadow-soft">
