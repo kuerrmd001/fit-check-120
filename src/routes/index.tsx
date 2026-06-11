@@ -38,7 +38,8 @@ function Splash() {
           </p>
           <h1 className="mt-2 text-3xl font-bold text-navy">ประเมินก่อนกลับไปขยับ</h1>
           <p className="mt-3 text-sm leading-7 text-navy-soft">
-            ช่วยประเมินอาการปวดหลังส่วนล่างเบื้องต้น และวางแผนกลับไปออกกำลังกายอย่างระมัดระวัง
+            Fit Check ช่วยประเมินอาการบาดเจ็บเบื้องต้นจากการออกกำลังกาย
+            โดยเวอร์ชันต้นแบบนี้เปิดใช้เต็มสำหรับอาการหลังล่างก่อน
           </p>
 
           <div className="mt-6 grid w-full gap-2 text-left">
