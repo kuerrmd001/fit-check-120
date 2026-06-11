@@ -163,3 +163,11 @@
     -webkit-font-smoothing: antialiased;
   }
 }
+
+:root.dark .bg-white {
+  background-color: var(--card) !important;
+}
+
+:root.dark .bg-white\/80 {
+  background-color: color-mix(in oklch, var(--card) 80%, transparent) !important;
+}
