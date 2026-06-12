@@ -32,8 +32,11 @@ export const store = {
     list.unshift(a);
     write(KEYS.assessments, list);
   },
-  getAssessment: (id: string) =>
-    store.getAssessments().find((a) => a.id === id),
+  getAssessment: (id: string) => store.getAssessments().find((a) => a.id === id),
+  deleteAssessment: (id: string) => {
+    const list = store.getAssessments().filter((a) => a.id !== id);
+    write(KEYS.assessments, list);
+  },
   addFollowup: (assessmentId: string, f: FollowupRecord) => {
     const list = store.getAssessments();
     const a = list.find((x) => x.id === assessmentId);
@@ -49,10 +52,8 @@ export const store = {
   getConsent: () => read<boolean>(KEYS.consent, false),
   setConsent: (v: boolean) => write(KEYS.consent, v),
 
-  getAuth: () =>
-    read<{ mode: "guest" | "user"; name?: string } | null>(KEYS.auth, null),
-  setAuth: (v: { mode: "guest" | "user"; name?: string } | null) =>
-    write(KEYS.auth, v),
+  getAuth: () => read<{ mode: "guest" | "user"; name?: string } | null>(KEYS.auth, null),
+  setAuth: (v: { mode: "guest" | "user"; name?: string } | null) => write(KEYS.auth, v),
 
   getProfile: () =>
     read(KEYS.profile, {
