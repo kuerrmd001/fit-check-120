@@ -98,13 +98,13 @@ function Page() {
     draft.setDetail("painSeverityLabel", meta.severity);
   };
 
-  const continueToSafety = () => {
+  const continueToRadiation = () => {
     if (selectedScore === null) return;
     const meta = getPainMeta(selectedScore);
     draft.setCommon({ painLevel: selectedScore });
     draft.setDetail("currentPainScore", selectedScore);
     draft.setDetail("painSeverityLabel", meta.severity);
-    nav({ to: "/assess/safety" });
+    nav({ to: "/assess/radiation" });
   };
 
   return (
@@ -184,7 +184,9 @@ function Page() {
             <div>
               <h3 className="text-sm font-bold text-navy">ควรเลือกคะแนนอย่างไร?</h3>
               <p className="mt-2 text-sm leading-6 text-navy-soft">
-                เลือกคะแนนจากอาการตอนนี้ หากอาการขึ้น ๆ ลง ๆ ให้เลือกคะแนนที่ใกล้เคียงกับความรู้สึกปัจจุบันที่สุด ถ้าอาการปวดมากจนเดินลำบากมาก หรือแย่ลงเรื่อย ๆ ให้ตอบตามจริงในขั้นตอนถัดไป
+                เลือกคะแนนจากอาการตอนนี้ หากอาการขึ้น ๆ ลง ๆ
+                ให้เลือกคะแนนที่ใกล้เคียงกับความรู้สึกปัจจุบันที่สุด ถ้าอาการปวดมากจนเดินลำบากมาก
+                หรือแย่ลงเรื่อย ๆ ให้ตอบตามจริงในขั้นตอนถัดไป
               </p>
             </div>
           </div>
@@ -195,10 +197,10 @@ function Page() {
             full
             size="lg"
             disabled={selectedScore === null}
-            onClick={continueToSafety}
+            onClick={continueToRadiation}
             className={selectedScore === null ? "opacity-50" : ""}
           >
-            ถัดไป: ตรวจอาการสำคัญ <ChevronRight className="h-4 w-4" />
+            ถัดไป: อาการร้าว/ชา <ChevronRight className="h-4 w-4" />
           </Button>
           <Button full variant="ghost" onClick={() => nav({ to: "/assess/location" })}>
             กลับไปเลือกตำแหน่ง
