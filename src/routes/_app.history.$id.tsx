@@ -9,12 +9,16 @@ import { RISK_META } from "@/content/carePlans";
 import { DISCLAIMER } from "@/content/disclaimer";
 import {
   getActivityLabel,
+  getDailyFunctionTrendLabel,
+  getFollowupResultCopy,
   getFollowupStatus,
+  getFollowupTrendLabel,
   getPainLocationLabel,
   getPainScore,
   getPainSeverityLabel,
   getPrimaryTriggerLabel,
   getRadiationLabel,
+  getReturnedToExerciseLabel,
   getRiskColorLabel,
   getRiskLevelLabel,
   getTriggerLabels,
@@ -121,11 +125,38 @@ function Page() {
             <div className="mt-3 space-y-2.5">
               {a.followups.map((f) => (
                 <div key={f.id} className="rounded-[20px] bg-muted/70 p-3 text-sm text-navy">
-                  <p className="font-semibold">
-                    {f.trend === "better" ? "ดีขึ้น" : f.trend === "same" ? "เท่าเดิม" : "แย่ลง"}
-                  </p>
+                  <p className="font-semibold">{getFollowupTrendLabel(f)}</p>
                   <p className="mt-1 text-xs text-navy-soft">
                     {new Date(f.createdAt).toLocaleString("th-TH")}
+                  </p>
+                  <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                    <div className="rounded-2xl bg-card/75 p-2.5">
+                      <p className="text-navy-soft">Pain</p>
+                      <p className="mt-0.5 font-bold text-navy">
+                        {typeof f.followUpPainScore === "number"
+                          ? `${f.followUpPainScore}/10`
+                          : "ไม่ได้ระบุ"}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl bg-card/75 p-2.5">
+                      <p className="text-navy-soft">กลับไปออกกำลังกาย</p>
+                      <p className="mt-0.5 font-bold text-navy">{getReturnedToExerciseLabel(f)}</p>
+                    </div>
+                    <div className="rounded-2xl bg-card/75 p-2.5">
+                      <p className="text-navy-soft">ชีวิตประจำวัน</p>
+                      <p className="mt-0.5 font-bold text-navy">{getDailyFunctionTrendLabel(f)}</p>
+                    </div>
+                    <div className="rounded-2xl bg-card/75 p-2.5">
+                      <p className="text-navy-soft">ความมั่นใจ</p>
+                      <p className="mt-0.5 font-bold text-navy">
+                        {typeof f.confidenceScore === "number"
+                          ? `${f.confidenceScore}/10`
+                          : "ไม่ได้ระบุ"}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-3 rounded-2xl bg-card/75 p-3 text-xs leading-relaxed text-navy-soft">
+                    {getFollowupResultCopy(f)}
                   </p>
                 </div>
               ))}
