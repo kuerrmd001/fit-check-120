@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type {
   ActivityType,
+  AssessmentDetailValue,
   CommonAnswers,
   SafetyAnswers,
 } from "@/lib/assessment/types";
@@ -9,11 +10,11 @@ interface DraftState {
   painLocation: "lower-back" | null;
   safety: SafetyAnswers;
   activity: ActivityType | null;
-  details: Record<string, string | number | boolean>;
+  details: Record<string, AssessmentDetailValue>;
   common: CommonAnswers;
   setSafety: (s: Partial<SafetyAnswers>) => void;
   setActivity: (a: ActivityType) => void;
-  setDetail: (k: string, v: string | number | boolean) => void;
+  setDetail: (k: string, v: AssessmentDetailValue) => void;
   setCommon: (c: Partial<CommonAnswers>) => void;
   reset: () => void;
 }
@@ -42,8 +43,7 @@ export const useDraft = create<DraftState>((set) => ({
   common: initialCommon,
   setSafety: (s) => set((st) => ({ safety: { ...st.safety, ...s } })),
   setActivity: (a) => set({ activity: a }),
-  setDetail: (k, v) =>
-    set((st) => ({ details: { ...st.details, [k]: v } })),
+  setDetail: (k, v) => set((st) => ({ details: { ...st.details, [k]: v } })),
   setCommon: (c) => set((st) => ({ common: { ...st.common, ...c } })),
   reset: () =>
     set({

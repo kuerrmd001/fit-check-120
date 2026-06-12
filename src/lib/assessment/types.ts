@@ -2,6 +2,7 @@ export type SafetyAnswer = "no" | "unsure" | "yes";
 export type RiskLevel = "green" | "yellow" | "red";
 export type ActivityType = "running" | "weights" | "unsure";
 export type FollowupTrend = "better" | "same" | "worse";
+export type AssessmentDetailValue = string | number | boolean | string[];
 
 export interface SafetyAnswers {
   radiating: SafetyAnswer;
@@ -26,7 +27,7 @@ export interface AssessmentRecord {
   painLocation: "lower-back";
   activity: ActivityType;
   safety: SafetyAnswers;
-  details: Record<string, string | number | boolean>;
+  details: Record<string, AssessmentDetailValue>;
   common: CommonAnswers;
   risk: RiskLevel;
   score: number;
