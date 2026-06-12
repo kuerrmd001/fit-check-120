@@ -1,14 +1,14 @@
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
+import { Info } from "lucide-react";
+import { useState } from "react";
 import { AppHeader } from "@/components/AppHeader";
-import { ProgressSteps } from "@/components/ProgressSteps";
-import { QuestionCard, type QuestionHelp } from "@/components/QuestionCard";
-import { OptionButton } from "@/components/OptionButton";
+import { AssessmentReferences } from "@/components/AssessmentReferences";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
-import { AssessmentReferences } from "@/components/AssessmentReferences";
+import { OptionButton } from "@/components/OptionButton";
+import { ProgressSteps } from "@/components/ProgressSteps";
+import { QuestionCard, type QuestionHelp } from "@/components/QuestionCard";
 import { useDraft } from "@/lib/assessment/draft";
-import { useState } from "react";
-import { Info } from "lucide-react";
 import type { ActivityType } from "@/lib/assessment/types";
 
 export const Route = createFileRoute("/_app/assess/questions/$type")({
@@ -75,6 +75,14 @@ const EXERCISE_HELPERS = {
 } as const;
 
 type ExerciseHelpKey = keyof typeof EXERCISE_HELPERS;
+type TriggerActivity = Extract<ActivityType, "running" | "weights">;
+type TriggerStep = "triggers" | "primary" | "questions";
+
+interface TriggerOption {
+  value: string;
+  label: string;
+  helperKeys?: ExerciseHelpKey[];
+}
 
 interface Q {
   key: string;
@@ -96,94 +104,143 @@ interface Q {
     | "radiatingMild";
 }
 
+const UNKNOWN_TRIGGER = "unknown";
 const UNSURE_TIP = "ถ้าไม่แน่ใจควรเลือก “ไม่แน่ใจ”";
 
+const WEIGHT_TRIGGER_OPTIONS: TriggerOption[] = [
+  { value: "squat_leg_press", label: "Squat / Leg Press", helperKeys: ["squat", "legpress"] },
+  {
+    value: "deadlift_hinge",
+    label: "Deadlift / Romanian Deadlift / Hip Hinge",
+    helperKeys: ["deadlift", "rdl"],
+  },
+  {
+    value: "hip_thrust_bridge",
+    label: "Hip Thrust / Glute Bridge",
+    helperKeys: ["hipthrust"],
+  },
+  { value: "row_pulling", label: "Row / Pulling exercise", helperKeys: ["row"] },
+  { value: "overhead_press", label: "Overhead Press", helperKeys: ["ohp"] },
+  {
+    value: "core",
+    label: "Core exercise เช่น plank / leg raise / sit-up",
+    helperKeys: ["plank", "legraise", "situp"],
+  },
+  { value: "lunge_split_squat", label: "Lunge / Split squat" },
+  { value: UNKNOWN_TRIGGER, label: "หลายท่า / ไม่แน่ใจ" },
+];
+
+const RUNNING_TRIGGER_OPTIONS: TriggerOption[] = [
+  { value: "longer_run", label: "วิ่งนานขึ้น" },
+  { value: "faster_run", label: "วิ่งเร็วขึ้น" },
+  { value: "hill", label: "วิ่งขึ้นเนิน / ทางชัน" },
+  { value: "sprint_interval", label: "Sprint / Interval" },
+  { value: "treadmill", label: "วิ่งบนลู่" },
+  { value: "hard_surface", label: "วิ่งบนพื้นแข็ง" },
+  { value: "after_run", label: "หลังวิ่งเสร็จ" },
+  { value: "next_day", label: "วันถัดมา" },
+  { value: UNKNOWN_TRIGGER, label: "ไม่แน่ใจ" },
+];
+
+const TRIGGER_COPY: Record<
+  TriggerActivity,
+  { title: string; subtitle: string; primaryTitle: string; primaryHint: string }
+> = {
+  running: {
+    title: "ช่วงไหนของการวิ่งที่กระตุ้นอาการ?",
+    subtitle: "เลือกได้มากกว่า 1 ข้อ หากหลายสถานการณ์ทำให้อาการชัดขึ้น",
+    primaryTitle: "สถานการณ์ไหนทำให้อาการชัดที่สุด?",
+    primaryHint: "สถานการณ์หลักนี้จะใช้เป็นข้อมูลหลักของรอบประเมินนี้",
+  },
+  weights: {
+    title: "ท่าหรือรูปแบบไหนที่กระตุ้นอาการ?",
+    subtitle: "เลือกได้มากกว่า 1 ข้อ หากหลายท่ากระตุ้นอาการ",
+    primaryTitle: "ท่าไหนกระตุ้นอาการมากที่สุด?",
+    primaryHint: "ท่าหลักนี้จะใช้เป็นข้อมูลหลักของรอบประเมินนี้",
+  },
+};
+
+function makeHelp(
+  meaning: string,
+  examples: string[],
+  why: string,
+  unsure = UNSURE_TIP,
+): QuestionHelp {
+  return { meaning, examples, why, unsure };
+}
+
 const HELP = {
-  onset: {
-    meaning: "ข้อนี้ถามว่าอาการเริ่มใกล้หรือไกลจากวันนี้แค่ไหน",
-    examples: ["วันนี้", "ภายใน 1 สัปดาห์", "เป็นมานานกว่า 1 เดือน"],
-    why: "ช่วงเวลาที่เริ่มมีอาการช่วยให้แอปมองภาพรวมว่าอาการเป็นเรื่องใหม่หรือเป็นมานานแล้ว",
-    unsure:
-      "ถ้าไม่แน่ใจ ให้เลือกช่วงเวลาที่ใกล้เคียงที่สุด หรือเลือก “ไม่แน่ใจ” เมื่อมีตัวเลือกนี้",
-  },
-  loadIncrease: {
-    meaning: "ข้อนี้ถามว่าช่วง 1-2 สัปดาห์ที่ผ่านมา คุณเพิ่มความหนักหรือเปลี่ยนรูปแบบการฝึกหรือไม่",
-    examples: ["เพิ่มระยะวิ่ง", "เพิ่มน้ำหนักหรือจำนวนเซ็ต", "ลองท่าใหม่หรือฝึกถี่ขึ้น"],
-    why: "การเปลี่ยนความหนักเร็วเกินไปอาจเกี่ยวข้องกับอาการที่เกิดขึ้น แอปจึงใช้เป็นข้อมูลประกอบ",
-    unsure: UNSURE_TIP,
-  },
-  duringRun: {
-    meaning: "ข้อนี้ถามว่าอาการเปลี่ยนอย่างไรในช่วงที่กำลังวิ่งหรือทำคาร์ดิโอ",
-    examples: ["เริ่มปวดแล้วค่อยดีขึ้น", "ปวดมากขึ้นเรื่อย ๆ", "ปวดจนต้องหยุด"],
-    why: "รูปแบบอาการระหว่างกิจกรรมช่วยบอกว่าอาการรบกวนการออกกำลังกายมากแค่ไหน",
-    unsure: UNSURE_TIP,
-  },
-  restResponse: {
-    meaning: "ข้อนี้ถามเพื่อดูว่าอาการตอบสนองต่อการพักหรือลดความหนักอย่างไร",
-    examples: ["พักแล้วดีขึ้น", "เท่าเดิม", "แย่ลงหลัง 24-48 ชั่วโมง"],
-    why: "ถ้าอาการดีขึ้นมักเป็นสัญญาณที่น่าติดตามต่อได้ แต่ถ้าแย่ลงควรระวังมากขึ้น",
-    unsure: UNSURE_TIP,
-  },
-  dailyImpact: {
-    meaning: "ข้อนี้ถามว่าอาการรบกวนกิจวัตรประจำวันมากน้อยแค่ไหน",
-    examples: ["เดินได้ปกติ", "ก้มแล้วยังเจ็บเล็กน้อย", "ยืน เดิน หรือใช้ชีวิตปกติได้ยาก"],
-    why: "ผลกระทบต่อชีวิตประจำวันช่วยให้แอปจัดระดับความระวังได้เหมาะขึ้น",
-    unsure: UNSURE_TIP,
-  },
-  painLevel: {
-    meaning: "ให้เลือกตัวเลขที่ใกล้กับความปวดตอนนี้มากที่สุด โดย 0 คือไม่ปวด และ 10 คือปวดมาก",
-    examples: ["0-2 ปวดน้อย", "3-5 ปวดปานกลาง", "6-10 ปวดมากขึ้น"],
-    why: "ตัวเลขช่วยให้เปรียบเทียบอาการครั้งนี้กับครั้งต่อไปได้ง่ายขึ้น",
-    unsure: "ถ้าไม่แน่ใจ ให้เลือกเลขที่ใกล้ความรู้สึกตอนนี้ที่สุด",
-  },
-  radiatingMild: {
-    meaning: "ข้อนี้ถามว่ามีอาการที่ลามออกไปจากหลังล่าง เช่น ชา ปวดร้าว หรือแรงลดลงเล็กน้อยหรือไม่",
-    examples: ["ปวดอยู่เฉพาะหลังล่าง", "มีชาหรือปวดร้าวลงขาเล็กน้อย", "รู้สึกแรงลดลงบางช่วง"],
-    why: "อาการที่ลามออกไปช่วยให้แอปเพิ่มความระวังในการแปลผล",
-    unsure: UNSURE_TIP,
-  },
-  exerciseTrigger: {
-    meaning: "ข้อนี้ถามหาท่าหลักที่กระตุ้นอาการมากที่สุดในรอบนี้",
-    examples: ["ปวดชัดตอน Squat", "ปวดหลัง Deadlift", "ไม่แน่ใจว่าเป็นท่าไหน"],
-    why: "ผลประเมินรอบนี้จะอิงจากท่าหลักที่เลือก ส่วนท่าอื่นใช้เป็นข้อมูลประกอบในอนาคต",
-    unsure: UNSURE_TIP,
-  },
-  weightTiming: {
-    meaning: "ข้อนี้ถามว่าอาการเกิดขึ้นระหว่างเล่น หลังเล่น หรือวันถัดมา",
-    examples: ["ปวดระหว่างยก", "ปวดหลังเล่นทันที", "ตื่นมาวันถัดมาแล้วปวด"],
-    why: "เวลาที่อาการเกิดขึ้นช่วยให้แอปเข้าใจความสัมพันธ์กับกิจกรรมได้ดีขึ้น",
-    unsure: UNSURE_TIP,
-  },
-  formBreak: {
-    meaning: "ข้อนี้ถามว่าระหว่างเล่นมีช่วงที่ควบคุมท่าหรือลำตัวได้ยากหรือไม่",
-    examples: ["ท่ายังนิ่ง", "หลังแอ่นหรือเกร็งผิดจังหวะ", "เสียจังหวะตอนยก"],
-    why: "ข้อมูลนี้ช่วยให้แอปเห็นว่าท่าหรือการควบคุมร่างกายอาจเกี่ยวข้องกับอาการหรือไม่",
-    unsure: UNSURE_TIP,
-  },
-  stopped: {
-    meaning: "ข้อนี้ถามว่าอาการทำให้คุณต้องหยุดกิจกรรมก่อนจบหรือไม่",
-    examples: ["เล่นต่อได้", "ลดน้ำหนักหรือหยุดบางเซ็ต", "หยุดเล่นทันที"],
-    why: "การต้องหยุดกลางคันสะท้อนว่าอาการรบกวนกิจกรรมมากขึ้น",
-    unsure: UNSURE_TIP,
-  },
-  cause: {
-    meaning: "ข้อนี้ถามว่าคุณคิดว่าอาการน่าจะเกี่ยวกับอะไร แม้จะยังไม่มั่นใจก็ได้",
-    examples: ["ไม่แน่ใจ", "นั่งนาน", "ออกกำลังกาย", "ยกของหนัก"],
-    why: "คำตอบช่วยแอปเลือกคำถามถัดไปให้ใกล้กับสถานการณ์ของคุณมากขึ้น",
-    unsure: UNSURE_TIP,
-  },
-  unsureWhen: {
-    meaning: "ข้อนี้ถามว่าอาการมักโผล่ขึ้นในช่วงไหนของวันหรือกิจกรรม",
-    examples: ["ตื่นนอนแล้วปวด", "นั่งนานแล้วปวด", "ปวดตอนเคลื่อนไหว"],
-    why: "ช่วงเวลาที่ปวดช่วยให้เห็นรูปแบบอาการ โดยไม่ต้องสรุปว่าเกิดจากสาเหตุใด",
-    unsure: UNSURE_TIP,
-  },
-  feel: {
-    meaning: "ข้อนี้ถามให้บอกลักษณะความรู้สึกของอาการเท่าที่อธิบายได้",
-    examples: ["ปวดตื้อ", "ปวดแปลบ", "ตึง", "ไม่แน่ใจ"],
-    why: "ลักษณะอาการช่วยให้บันทึกข้อมูลได้ละเอียดขึ้นสำหรับการติดตามครั้งต่อไป",
-    unsure: UNSURE_TIP,
-  },
+  onset: makeHelp(
+    "ถามว่าอาการเริ่มใกล้หรือไกลจากวันนี้แค่ไหน",
+    ["วันนี้", "ภายใน 1 สัปดาห์", "เป็นมานานกว่า 1 เดือน"],
+    "ช่วงเวลาที่เริ่มมีอาการช่วยให้แอปมองภาพรวมของอาการได้ชัดขึ้น",
+  ),
+  loadIncrease: makeHelp(
+    "ถามว่าช่วง 1-2 สัปดาห์ที่ผ่านมา คุณเพิ่มความหนักหรือเปลี่ยนรูปแบบการฝึกหรือไม่",
+    ["เพิ่มระยะวิ่ง", "เพิ่มน้ำหนักหรือจำนวนเซ็ต", "ลองท่าใหม่หรือฝึกถี่ขึ้น"],
+    "การเปลี่ยนความหนักเร็วเกินไปอาจเกี่ยวข้องกับอาการที่เกิดขึ้น จึงใช้เป็นข้อมูลประกอบ",
+  ),
+  duringRun: makeHelp(
+    "ถามว่าอาการเปลี่ยนอย่างไรในช่วงที่กำลังวิ่งหรือทำคาร์ดิโอ",
+    ["เริ่มปวดแล้วค่อยดีขึ้น", "ปวดมากขึ้นเรื่อย ๆ", "ปวดจนต้องหยุด"],
+    "รูปแบบอาการระหว่างกิจกรรมช่วยบอกว่าอาการรบกวนการออกกำลังกายมากแค่ไหน",
+  ),
+  restResponse: makeHelp(
+    "ถามเพื่อดูว่าอาการตอบสนองต่อการพักหรือลดความหนักอย่างไร",
+    ["พักแล้วดีขึ้น", "เท่าเดิม", "แย่ลงหลัง 24-48 ชั่วโมง"],
+    "ถ้าอาการดีขึ้นมักเป็นสัญญาณที่น่าติดตามต่อได้ แต่ถ้าแย่ลงควรระวังมากขึ้น",
+  ),
+  dailyImpact: makeHelp(
+    "ถามว่าอาการรบกวนกิจวัตรประจำวันมากน้อยแค่ไหน",
+    ["เดินได้ปกติ", "ก้มแล้วยังเจ็บเล็กน้อย", "ยืนหรือเดินลำบาก"],
+    "ผลกระทบต่อชีวิตประจำวันช่วยให้แอปจัดระดับความระวังได้เหมาะขึ้น",
+  ),
+  painLevel: makeHelp(
+    "ให้เลือกตัวเลขที่ใกล้กับความปวดตอนนี้มากที่สุด โดย 0 คือไม่ปวด และ 10 คือปวดมาก",
+    ["0-2 ปวดน้อย", "3-5 ปวดปานกลาง", "6-10 ปวดมากขึ้น"],
+    "ตัวเลขช่วยให้เปรียบเทียบอาการครั้งนี้กับครั้งต่อไปได้ง่ายขึ้น",
+    "ถ้าไม่แน่ใจ ให้เลือกเลขที่ใกล้ความรู้สึกตอนนี้ที่สุด",
+  ),
+  radiatingMild: makeHelp(
+    "ถามว่ามีอาการที่ลามออกไปจากหลังล่าง เช่น ชา ปวดร้าว หรือแรงลดลงเล็กน้อยหรือไม่",
+    ["ปวดอยู่เฉพาะหลังล่าง", "มีชาหรือปวดร้าวลงขาเล็กน้อย", "รู้สึกแรงลดลงบางช่วง"],
+    "อาการที่ลามออกไปช่วยให้แอปเพิ่มความระวังในการแปลผล",
+  ),
+  exerciseTrigger: makeHelp(
+    "ถามหาท่าหลักที่กระตุ้นอาการมากที่สุดในรอบนี้",
+    ["ปวดชัดตอน Squat", "ปวดหลัง Deadlift", "ไม่แน่ใจว่าเป็นท่าไหน"],
+    "ผลประเมินรอบนี้จะอิงจากท่าหลักที่เลือก ส่วนท่าอื่นใช้เป็นข้อมูลประกอบ",
+  ),
+  weightTiming: makeHelp(
+    "ถามว่าอาการเกิดขึ้นระหว่างเล่น หลังเล่น หรือวันถัดมา",
+    ["ปวดระหว่างยก", "ปวดหลังเล่นทันที", "ตื่นมาวันถัดมาแล้วปวด"],
+    "เวลาที่อาการเกิดขึ้นช่วยให้แอปเข้าใจความสัมพันธ์กับกิจกรรมได้ดีขึ้น",
+  ),
+  formBreak: makeHelp(
+    "ถามว่าระหว่างเล่นมีช่วงที่ควบคุมท่าหรือลำตัวได้ยากหรือไม่",
+    ["ท่ายังนิ่ง", "หลังแอ่นหรือเกร็งผิดจังหวะ", "เสียจังหวะตอนยก"],
+    "ข้อมูลนี้ช่วยให้เห็นว่าท่าหรือการควบคุมร่างกายอาจเกี่ยวข้องกับอาการหรือไม่",
+  ),
+  stopped: makeHelp(
+    "ถามว่าอาการทำให้คุณต้องหยุดกิจกรรมก่อนจบหรือไม่",
+    ["เล่นต่อได้", "ลดน้ำหนักหรือหยุดบางเซ็ต", "หยุดเล่นทันที"],
+    "การต้องหยุดกลางคันสะท้อนว่าอาการรบกวนกิจกรรมมากขึ้น",
+  ),
+  cause: makeHelp(
+    "ถามว่าคุณคิดว่าอาการน่าจะเกี่ยวกับอะไร แม้จะยังไม่มั่นใจก็ได้",
+    ["ไม่แน่ใจ", "นั่งนาน", "ออกกำลังกาย", "ยกของหนัก"],
+    "คำตอบช่วยให้แอปเลือกคำถามถัดไปให้ใกล้กับสถานการณ์ของคุณมากขึ้น",
+  ),
+  unsureWhen: makeHelp(
+    "ถามว่าอาการมักโผล่ขึ้นในช่วงไหนของวันหรือกิจกรรม",
+    ["ตื่นนอนแล้วปวด", "นั่งนานแล้วปวด", "ปวดตอนเคลื่อนไหว"],
+    "ช่วงเวลาที่ปวดช่วยให้เห็นรูปแบบอาการ โดยไม่ต้องสรุปว่าเกิดจากสาเหตุใด",
+  ),
+  feel: makeHelp(
+    "ถามให้บอกลักษณะความรู้สึกของอาการเท่าที่อธิบายได้",
+    ["ปวดตื้อ", "ปวดแปลบ", "ตึง", "ไม่แน่ใจ"],
+    "ลักษณะอาการช่วยให้บันทึกข้อมูลได้ละเอียดขึ้นสำหรับการติดตามครั้งต่อไป",
+  ),
 } satisfies Record<string, QuestionHelp>;
 
 const RUNNING: Q[] = [
@@ -413,13 +470,83 @@ const BANKS: Record<ActivityType, Q[]> = {
   unsure: UNSURE,
 };
 
+function normalizeActivityType(type: string): ActivityType {
+  if (type === "running") return "running";
+  if (type === "weight" || type === "weights") return "weights";
+  return "unsure";
+}
+
+function isTriggerActivity(type: ActivityType): type is TriggerActivity {
+  return type === "running" || type === "weights";
+}
+
+function getTriggerOptions(type: TriggerActivity) {
+  return type === "weights" ? WEIGHT_TRIGGER_OPTIONS : RUNNING_TRIGGER_OPTIONS;
+}
+
+function readSavedTriggers(value: unknown) {
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string")
+    : [];
+}
+
 function Page() {
   const { type } = useParams({ from: "/_app/assess/questions/$type" });
   const nav = useNavigate();
   const draft = useDraft();
-  const questions = BANKS[type as ActivityType] ?? UNSURE;
+  const activityType = normalizeActivityType(type);
+  const triggerActivity = isTriggerActivity(activityType) ? activityType : null;
+  const triggerOptions = triggerActivity ? getTriggerOptions(triggerActivity) : [];
+  const savedTriggers = readSavedTriggers(draft.details.triggers);
+  const savedPrimaryTrigger =
+    typeof draft.details.primaryTrigger === "string" ? draft.details.primaryTrigger : "";
+  const questions = BANKS[activityType]
+    .filter((q) => q.key !== "painLevel")
+    .filter((q) => !(activityType === "weights" && q.key === "exercise"));
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [exerciseHelp, setExerciseHelp] = useState<ExerciseHelpKey | null>(null);
+  const [selectedTriggers, setSelectedTriggers] = useState<string[]>(savedTriggers);
+  const [primaryTrigger, setPrimaryTrigger] = useState(savedPrimaryTrigger);
+  const [triggerStep, setTriggerStep] = useState<TriggerStep>(
+    triggerActivity && (!savedTriggers.length || !savedPrimaryTrigger) ? "triggers" : "questions",
+  );
+
+  const toggleTrigger = (value: string) => {
+    setSelectedTriggers((current) => {
+      const next = current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value];
+      if (!next.includes(primaryTrigger)) setPrimaryTrigger("");
+      return next;
+    });
+  };
+
+  const storeTriggerDetails = (triggers: string[], primary: string) => {
+    draft.setDetail("triggers", triggers);
+    draft.setDetail("primaryTrigger", primary);
+  };
+
+  const continueFromTriggerSelection = () => {
+    if (!triggerActivity || selectedTriggers.length === 0) return;
+    const concreteTriggers = selectedTriggers.filter((item) => item !== UNKNOWN_TRIGGER);
+
+    if (concreteTriggers.length <= 1) {
+      const nextPrimary = concreteTriggers[0] ?? UNKNOWN_TRIGGER;
+      setPrimaryTrigger(nextPrimary);
+      storeTriggerDetails(selectedTriggers, nextPrimary);
+      setTriggerStep("questions");
+      return;
+    }
+
+    setPrimaryTrigger((current) => (concreteTriggers.includes(current) ? current : ""));
+    setTriggerStep("primary");
+  };
+
+  const continueFromPrimarySelection = () => {
+    if (!primaryTrigger) return;
+    storeTriggerDetails(selectedTriggers, primaryTrigger);
+    setTriggerStep("questions");
+  };
 
   const setAns = (q: Q, v: string) => {
     setAnswers((a) => ({ ...a, [q.key]: v }));
@@ -436,6 +563,7 @@ function Page() {
   const allAnswered = questions.every((q) => answers[q.key] !== undefined);
 
   const onSubmit = () => {
+    if (draft.activity !== activityType) draft.setActivity(activityType);
     const unsureCount = Object.values(answers).filter((v) =>
       String(v).toLowerCase().includes("unsure"),
     ).length;
@@ -443,97 +571,232 @@ function Page() {
   };
 
   const title =
-    type === "running" ? "วิ่ง / Cardio" : type === "weights" ? "Weight Training" : "ไม่แน่ใจ";
+    activityType === "running"
+      ? "วิ่ง / Cardio"
+      : activityType === "weights"
+        ? "Weight Training"
+        : "ไม่แน่ใจ";
 
   return (
     <>
       <AppHeader title={title} back />
-      <ProgressSteps step={4} total={5} />
+      <ProgressSteps step={5} total={6} />
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-6">
-        {type === "weights" && (
-          <Card className="space-y-2 rounded-[26px] border-primary/15 bg-primary-soft/60">
-            <p className="text-sm font-bold text-navy">เลือกท่าหลักที่กระตุ้นอาการมากที่สุด</p>
-            <p className="text-sm leading-6 text-navy-soft">
-              ท่าอื่นที่เกี่ยวข้องใช้เป็นข้อมูลประกอบ ไม่ใช่ตัวตัดสินหลัก
-            </p>
+        {triggerActivity && triggerStep === "triggers" && (
+          <Card className="space-y-4 rounded-[28px] border-primary/15 bg-card">
+            <div>
+              <h2 className="text-xl font-bold text-navy">{TRIGGER_COPY[triggerActivity].title}</h2>
+              <p className="mt-2 text-sm leading-6 text-navy-soft">
+                {TRIGGER_COPY[triggerActivity].subtitle}
+              </p>
+              <p className="mt-2 text-xs font-semibold leading-5 text-primary">
+                ท่าอื่นที่เกี่ยวข้องใช้เป็นข้อมูลประกอบ ไม่ใช่ตัวตัดสินหลัก
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {triggerOptions.map((option) => {
+                const selected = selectedTriggers.includes(option.value);
+                return (
+                  <div key={option.value} className="space-y-2">
+                    <button
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => toggleTrigger(option.value)}
+                      className={`w-full rounded-[24px] border px-4 py-4 text-left transition active:scale-[0.99] ${
+                        selected
+                          ? "border-primary bg-primary text-white shadow-soft ring-4 ring-primary/15"
+                          : "border-border bg-card text-navy shadow-soft"
+                      }`}
+                    >
+                      <span className="flex items-start justify-between gap-3">
+                        <span className="text-base font-bold leading-6">{option.label}</span>
+                        <span
+                          className={`mt-1 h-5 w-5 shrink-0 rounded-full border ${
+                            selected ? "border-white bg-white/20" : "border-primary/40"
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </button>
+                    {option.helperKeys && (
+                      <div className="flex flex-wrap gap-2 px-1">
+                        {option.helperKeys.map((helperKey) => (
+                          <button
+                            key={helperKey}
+                            type="button"
+                            onClick={() => setExerciseHelp(helperKey)}
+                            className="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary-soft px-3 py-1.5 text-xs font-semibold text-primary"
+                          >
+                            <Info className="h-3.5 w-3.5" />
+                            อธิบายท่า
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <Button
+              full
+              size="lg"
+              disabled={selectedTriggers.length === 0}
+              onClick={continueFromTriggerSelection}
+              className={selectedTriggers.length === 0 ? "opacity-50" : ""}
+            >
+              ถัดไป
+            </Button>
           </Card>
         )}
 
-        <div className="flex justify-end">
-          <AssessmentReferences />
-        </div>
+        {triggerActivity && triggerStep === "primary" && (
+          <Card className="space-y-4 rounded-[28px] border-primary/15 bg-card">
+            <div>
+              <h2 className="text-xl font-bold text-navy">
+                {TRIGGER_COPY[triggerActivity].primaryTitle}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-navy-soft">
+                เลือก 1 ข้อจากคำตอบที่คุณเลือกไว้ เพื่อให้ผลประเมินรอบนี้ชัดเจนขึ้น
+              </p>
+              <p className="mt-2 text-xs font-semibold leading-5 text-primary">
+                {TRIGGER_COPY[triggerActivity].primaryHint}
+              </p>
+            </div>
 
-        {questions.map((q, i) => (
-          <QuestionCard
-            key={q.key}
-            number={i + 1}
-            total={questions.length}
-            question={q.q}
-            help={q.help}
-          >
-            {q.type === "yesno" && (
-              <>
-                <OptionButton selected={answers[q.key] === "no"} onClick={() => setAns(q, "no")}>
-                  ไม่ใช่
-                </OptionButton>
-                <OptionButton selected={answers[q.key] === "yes"} onClick={() => setAns(q, "yes")}>
-                  ใช่
-                </OptionButton>
-              </>
-            )}
-            {q.type === "options" &&
-              q.options?.map((o) => (
-                <div
-                  key={o.v}
-                  className={o.helperKey ? "grid grid-cols-[minmax(0,1fr)_auto] gap-2" : ""}
-                >
-                  <OptionButton selected={answers[q.key] === o.v} onClick={() => setAns(q, o.v)}>
-                    {o.label}
-                  </OptionButton>
-                  {o.helperKey && (
+            <div className="space-y-2.5">
+              {triggerOptions
+                .filter(
+                  (option) =>
+                    selectedTriggers.includes(option.value) && option.value !== UNKNOWN_TRIGGER,
+                )
+                .map((option) => {
+                  const selected = primaryTrigger === option.value;
+                  return (
                     <button
+                      key={option.value}
                       type="button"
-                      onClick={() => setExerciseHelp(o.helperKey ?? null)}
-                      className="flex h-full min-h-14 w-12 items-center justify-center rounded-[22px] border border-primary/20 bg-primary-soft text-primary transition hover:bg-primary-soft/70"
-                      aria-label={`ดูคำอธิบาย ${o.label}`}
+                      aria-pressed={selected}
+                      onClick={() => setPrimaryTrigger(option.value)}
+                      className={`w-full rounded-[24px] border px-4 py-4 text-left text-base font-bold leading-6 transition active:scale-[0.99] ${
+                        selected
+                          ? "border-primary bg-primary text-white shadow-soft ring-4 ring-primary/15"
+                          : "border-border bg-card text-navy shadow-soft"
+                      }`}
                     >
-                      <Info className="h-4 w-4" />
+                      {option.label}
                     </button>
-                  )}
-                </div>
-              ))}
-            {q.type === "slider" && (
-              <div>
-                <input
-                  type="range"
-                  min={0}
-                  max={10}
-                  value={draft.common.painLevel}
-                  onChange={(e) => {
-                    const n = Number(e.target.value);
-                    draft.setCommon({ painLevel: n });
-                    setAnswers((a) => ({ ...a, [q.key]: String(n) }));
-                  }}
-                  className="w-full accent-[oklch(0.68_0.13_180)]"
-                />
-                <div className="mt-1 flex justify-between text-xs text-navy-soft">
-                  <span>0 ไม่ปวด</span>
-                  <span className="text-lg font-bold text-navy">{draft.common.painLevel}</span>
-                  <span>10 ปวดมาก</span>
-                </div>
-              </div>
-            )}
-          </QuestionCard>
-        ))}
-        <Button
-          full
-          size="lg"
-          disabled={!allAnswered}
-          onClick={onSubmit}
-          className={!allAnswered ? "opacity-50" : ""}
-        >
-          ดูผลการประเมิน
-        </Button>
+                  );
+                })}
+            </div>
+
+            <div className="space-y-2">
+              <Button
+                full
+                size="lg"
+                disabled={!primaryTrigger}
+                onClick={continueFromPrimarySelection}
+                className={!primaryTrigger ? "opacity-50" : ""}
+              >
+                ถัดไป
+              </Button>
+              <Button full variant="ghost" onClick={() => setTriggerStep("triggers")}>
+                กลับไปแก้ไขท่าหรือสถานการณ์
+              </Button>
+            </div>
+          </Card>
+        )}
+
+        {(!triggerActivity || triggerStep === "questions") && (
+          <>
+            <div className="flex justify-end">
+              <AssessmentReferences />
+            </div>
+
+            {questions.map((q, i) => (
+              <QuestionCard
+                key={q.key}
+                number={i + 1}
+                total={questions.length}
+                question={q.q}
+                help={q.help}
+              >
+                {q.type === "yesno" && (
+                  <>
+                    <OptionButton
+                      selected={answers[q.key] === "no"}
+                      onClick={() => setAns(q, "no")}
+                    >
+                      ไม่ใช่
+                    </OptionButton>
+                    <OptionButton
+                      selected={answers[q.key] === "yes"}
+                      onClick={() => setAns(q, "yes")}
+                    >
+                      ใช่
+                    </OptionButton>
+                  </>
+                )}
+                {q.type === "options" &&
+                  q.options?.map((o) => (
+                    <div
+                      key={o.v}
+                      className={o.helperKey ? "grid grid-cols-[minmax(0,1fr)_auto] gap-2" : ""}
+                    >
+                      <OptionButton
+                        selected={answers[q.key] === o.v}
+                        onClick={() => setAns(q, o.v)}
+                      >
+                        {o.label}
+                      </OptionButton>
+                      {o.helperKey && (
+                        <button
+                          type="button"
+                          onClick={() => setExerciseHelp(o.helperKey ?? null)}
+                          className="flex h-full min-h-14 w-12 items-center justify-center rounded-[22px] border border-primary/20 bg-primary-soft text-primary transition hover:bg-primary-soft/70"
+                          aria-label={`ดูคำอธิบาย ${o.label}`}
+                        >
+                          <Info className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                {q.type === "slider" && (
+                  <div>
+                    <input
+                      type="range"
+                      min={0}
+                      max={10}
+                      value={draft.common.painLevel}
+                      onChange={(e) => {
+                        const n = Number(e.target.value);
+                        draft.setCommon({ painLevel: n });
+                        setAnswers((a) => ({ ...a, [q.key]: String(n) }));
+                      }}
+                      className="w-full accent-[oklch(0.68_0.13_180)]"
+                    />
+                    <div className="mt-1 flex justify-between text-xs text-navy-soft">
+                      <span>0 ไม่ปวด</span>
+                      <span className="text-lg font-bold text-navy">{draft.common.painLevel}</span>
+                      <span>10 ปวดมาก</span>
+                    </div>
+                  </div>
+                )}
+              </QuestionCard>
+            ))}
+
+            <Button
+              full
+              size="lg"
+              disabled={!allAnswered}
+              onClick={onSubmit}
+              className={!allAnswered ? "opacity-50" : ""}
+            >
+              ดูผลการประเมิน
+            </Button>
+          </>
+        )}
       </div>
 
       {exerciseHelp && (
