@@ -290,11 +290,24 @@ function Page() {
             </Button>
           </Link>
           {a.risk !== "red" && (
-            <Link to="/assess/followup/$id" params={{ id: a.id }}>
-              <Button full variant="outline">
-                ตั้งเตือนติดตามอาการ 24–48 ชั่วโมง
-              </Button>
-            </Link>
+            <Card className="rounded-[26px] border-primary/15 bg-primary-soft/50 p-4 shadow-soft">
+              <div className="flex items-start gap-3">
+                <CalendarClock className="mt-0.5 h-5 w-5 text-primary" />
+                <div className="flex-1">
+                  <h3 className="text-sm font-bold text-navy">
+                    ติดตามอาการอีกครั้งใน 24–48 ชั่วโมง
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-navy-soft">
+                    การติดตามอาการช่วยดูว่าอาการดีขึ้น เท่าเดิม หรือแย่ลงหลังพักหรือปรับกิจกรรม
+                  </p>
+                  <Link to="/assess/followup/$id" params={{ id: a.id }}>
+                    <Button full variant="outline" className="mt-3 bg-card">
+                      ตั้งเตือน / ประเมินซ้ำ
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </Card>
           )}
           <Card className="rounded-[22px] border-primary/15 bg-primary-soft/50 p-4 text-sm font-semibold text-navy">
             บันทึกผลประเมินแล้วในประวัติ
