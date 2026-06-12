@@ -149,13 +149,13 @@ function Page() {
     setDetail("painSubRegion", selectedZone.storageValue);
     setDetail("primaryPainRegion", selectedZone.storageValue);
     setDetail("multiplePainRegions", hasMultipleLocations);
-    nav({ to: "/assess/safety" });
+    nav({ to: "/assess/pain-scale" });
   };
 
   return (
     <>
       <AppHeader title="ตำแหน่งที่มีอาการ" back />
-      <ProgressSteps step={1} total={5} label="เลือกตำแหน่งที่มีอาการ" />
+      <ProgressSteps step={1} total={6} label="เลือกตำแหน่งที่มีอาการ" />
       {step === "region" ? (
         <RegionStep selectedRegion={selectedRegion} onSelect={chooseRegion} />
       ) : (
@@ -297,7 +297,7 @@ function BackStep({
           <div>
             <p className="text-sm font-bold text-navy">แผนที่อาการปวดหลัง</p>
             <p className="mt-0.5 text-xs leading-5 text-navy-soft">
-              ตำแหน่งที่เลือกได้จะไปต่อยัง Safety Check
+              ตำแหน่งที่เลือกได้จะไปต่อยังการให้คะแนนความปวด
             </p>
           </div>
           <span className="shrink-0 rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold text-primary">
@@ -356,7 +356,7 @@ function BackStep({
       </button>
 
       <Button full size="lg" onClick={onContinue}>
-        ไป Safety Check <ChevronRight className="h-4 w-4" />
+        ไปให้คะแนนความปวด <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
   );
