@@ -9,6 +9,7 @@ export const Route = createFileRoute("/_app/guide/")({ component: Page });
 function Page() {
   const featured = ARTICLES[0];
   const mythArticles = ARTICLES.filter((a) => a.category === "pain-education");
+  const visibleMythArticles = mythArticles.slice(0, 3);
 
   return (
     <>
@@ -66,7 +67,7 @@ function Page() {
             </p>
           </div>
           <div className="space-y-2.5">
-            {mythArticles.map((a) => (
+            {visibleMythArticles.map((a) => (
               <Link key={a.id} to="/guide/article/$id" params={{ id: a.id }}>
                 <Card className="rounded-[24px] border-primary/10 bg-card p-4 shadow-soft">
                   <div className="mb-2 flex flex-wrap gap-2">
@@ -84,6 +85,11 @@ function Page() {
                 </Card>
               </Link>
             ))}
+            {mythArticles.length > visibleMythArticles.length && (
+              <p className="px-1 text-xs leading-relaxed text-navy-soft">
+                อ่านบทความเพิ่มเติมได้จากบทความล่าสุดหรือค้นหาด้วยคำว่า “ปวด”, “วิ่ง” หรือ “เวท”
+              </p>
+            )}
           </div>
         </div>
 
