@@ -16,6 +16,11 @@ function Page() {
         (a) =>
           a.title.toLowerCase().includes(term) ||
           a.summary.toLowerCase().includes(term) ||
+          a.sections.some(
+            (section) =>
+              section.heading.toLowerCase().includes(term) ||
+              section.body.some((body) => body.toLowerCase().includes(term)),
+          ) ||
           CATEGORIES.find((c) => c.id === a.category)
             ?.name.toLowerCase()
             .includes(term),
