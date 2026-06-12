@@ -95,6 +95,10 @@ function Page() {
           </AlertBox>
         )}
 
+        <AlertBox tone="warning" title="สังเกตอาการต่อ">
+          หากอาการปวดเพิ่มขึ้น มีชา อ่อนแรง หรือรู้สึกไม่แน่ใจ ควรหยุดกิจกรรมและพบผู้เชี่ยวชาญ
+        </AlertBox>
+
         <div className="space-y-2">
           <Button full size="lg" onClick={() => setSaved(true)}>
             <Save className="h-4 w-4" />

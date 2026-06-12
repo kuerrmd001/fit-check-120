@@ -94,7 +94,7 @@ function Home() {
               to="/assess"
               className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-primary shadow-soft"
             >
-              เริ่มประเมินอาการ <ChevronRight className="h-4 w-4" />
+              เริ่มประเมินอาการบาดเจ็บ <ChevronRight className="h-4 w-4" />
             </Link>
             <button
               type="button"

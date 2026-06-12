@@ -114,7 +114,7 @@ function Page() {
           </div>
         </Card>
 
-        <AlertBox tone="info" title="คำแนะนำระหว่างทำ">
+        <AlertBox tone="warning" title="ข้อควรระวังระหว่างทำ">
           {session.tip}
         </AlertBox>
 

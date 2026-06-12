@@ -112,7 +112,7 @@ function Page() {
         </Card>
 
         <Card className="rounded-[26px]">
-          <h2 className="text-sm font-semibold text-navy">ประโยชน์ที่คาดหวัง</h2>
+          <h2 className="text-sm font-semibold text-navy">จุดที่กิจกรรมนี้เน้น</h2>
           <div className="mt-3 space-y-2">
             {activity.benefits.map((item) => (
               <div key={item} className="flex items-start gap-2 text-sm text-navy-soft">
