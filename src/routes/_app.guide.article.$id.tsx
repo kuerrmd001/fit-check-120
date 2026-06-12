@@ -10,6 +10,31 @@ import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_app/guide/article/$id")({ component: Page });
 
+function sectionTone(heading: string) {
+  if (heading.includes("ความเข้าใจผิด")) {
+    return {
+      card: "border-risk-yellow/25 bg-risk-yellow-soft/45",
+      dot: "bg-risk-yellow",
+      icon: "text-risk-yellow",
+      label: "ความเข้าใจผิด",
+    };
+  }
+  if (heading.includes("ข้อเท็จจริง")) {
+    return {
+      card: "border-primary/20 bg-primary-soft/45",
+      dot: "bg-primary",
+      icon: "text-primary",
+      label: "ข้อเท็จจริง",
+    };
+  }
+  return {
+    card: "border-border/70 bg-card",
+    dot: "bg-primary",
+    icon: "text-primary",
+    label: heading,
+  };
+}
+
 function Page() {
   const { id } = useParams({ from: "/_app/guide/article/$id" });
   const article = ARTICLES.find((a) => a.id === id);
@@ -51,26 +76,29 @@ function Page() {
           tone={article.category === "redflag" ? "danger" : "info"}
           title="ข้อมูลเพื่อการเรียนรู้"
         >
-          บทความนี้เป็นข้อมูลทั่วไป ไม่ใช่การวินิจฉัยหรือการรักษาเฉพาะบุคคล
-          หากมีสัญญาณอันตรายควรพบผู้เชี่ยวชาญ
+          เนื้อหานี้เป็นข้อมูลเพื่อการศึกษา ไม่ใช่การวินิจฉัยโรคหรือแผนรักษา หากอาการรุนแรง แย่ลง
+          หรือไม่แน่ใจ ควรพบผู้เชี่ยวชาญ
         </AlertBox>
 
-        {article.sections.map((s, i) => (
-          <Card key={i} className="rounded-[26px] border-border/70 bg-card p-5 shadow-soft">
-            <div className="mb-3 flex items-center gap-2">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-              <h3 className="text-sm font-semibold text-navy">{s.heading}</h3>
-            </div>
-            <ul className="space-y-2 text-sm leading-relaxed text-navy-soft">
-              {s.body.map((b, j) => (
-                <li key={j} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        ))}
+        {article.sections.map((s, i) => {
+          const tone = sectionTone(s.heading);
+          return (
+            <Card key={i} className={`rounded-[26px] border p-5 shadow-soft ${tone.card}`}>
+              <div className="mb-3 flex items-center gap-2">
+                <ShieldCheck className={`h-5 w-5 ${tone.icon}`} />
+                <h3 className="text-sm font-semibold text-navy">{tone.label}</h3>
+              </div>
+              <ul className="space-y-2 text-sm leading-relaxed text-navy-soft">
+                {s.body.map((b, j) => (
+                  <li key={j} className="flex gap-2">
+                    <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${tone.dot}`} />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          );
+        })}
 
         <Card className="rounded-[26px] border-border/70 bg-card p-5 shadow-soft">
           <p className="text-sm font-semibold text-navy">บทความนี้มีประโยชน์หรือไม่?</p>
