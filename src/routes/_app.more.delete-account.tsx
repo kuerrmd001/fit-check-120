@@ -12,6 +12,8 @@ export const Route = createFileRoute("/_app/more/delete-account")({ component: P
 function Page() {
   const nav = useNavigate();
   const [confirmed, setConfirmed] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+  const canDelete = confirmed && confirmText.trim() === "ลบข้อมูล";
 
   return (
     <>
@@ -63,12 +65,27 @@ function Page() {
           </span>
         </label>
 
+        <Card>
+          <label className="block">
+            <span className="text-sm font-bold text-navy">ยืนยันด้วยข้อความ</span>
+            <span className="mt-1 block text-xs leading-relaxed text-navy-soft">
+              พิมพ์คำว่า “ลบข้อมูล” เพื่อยืนยันว่าคุณต้องการลบข้อมูลในเครื่องนี้
+            </span>
+            <input
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              placeholder="ลบข้อมูล"
+              className="mt-3 w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm text-navy outline-none transition placeholder:text-navy-soft/70 focus:border-risk-red focus:ring-2 focus:ring-risk-red-soft"
+            />
+          </label>
+        </Card>
+
         <Button
           full
           size="lg"
           variant="danger"
-          disabled={!confirmed}
-          className={!confirmed ? "opacity-50" : ""}
+          disabled={!canDelete}
+          className={!canDelete ? "opacity-50" : ""}
           onClick={() => {
             store.deleteAll();
             nav({ to: "/disclaimer" });

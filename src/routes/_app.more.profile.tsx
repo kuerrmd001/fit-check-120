@@ -87,7 +87,7 @@ function Page() {
                     [f.k]: f.type === "number" ? Number(e.target.value) : e.target.value,
                   })
                 }
-                className="mt-1 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-navy outline-none transition focus:border-primary focus:ring-2 focus:ring-primary-soft"
+                className="mt-1 w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm text-navy outline-none transition focus:border-primary focus:ring-2 focus:ring-primary-soft"
               />
               <span className="mt-1 block text-[11px] text-navy-soft">{f.helper}</span>
             </label>

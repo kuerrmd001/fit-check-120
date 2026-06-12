@@ -59,7 +59,7 @@ function Page() {
             onChange={(e) => setMsg(e.target.value)}
             rows={4}
             placeholder="บอกเล่าปัญหาหรือข้อเสนอแนะ..."
-            className="mt-3 w-full rounded-2xl border border-border bg-white p-3 text-sm text-navy outline-none transition placeholder:text-navy-soft/70 focus:border-primary focus:ring-2 focus:ring-primary-soft"
+            className="mt-3 w-full rounded-2xl border border-border bg-card p-3 text-sm text-navy outline-none transition placeholder:text-navy-soft/70 focus:border-primary focus:ring-2 focus:ring-primary-soft"
           />
           <Button
             full
