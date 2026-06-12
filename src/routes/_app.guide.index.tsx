@@ -8,6 +8,7 @@ export const Route = createFileRoute("/_app/guide/")({ component: Page });
 
 function Page() {
   const featured = ARTICLES[0];
+  const mythArticles = ARTICLES.filter((a) => a.category === "pain-education");
 
   return (
     <>
@@ -53,6 +54,35 @@ function Page() {
               >
                 {c.name}
               </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-2">
+            <h3 className="text-sm font-semibold text-navy">เข้าใจอาการปวดจากการออกกำลังกาย</h3>
+            <p className="mt-1 text-xs leading-relaxed text-navy-soft">
+              Myth vs Fact แบบสั้น ๆ เพื่อช่วยแยกความเข้าใจผิดจากสิ่งที่ควรสังเกต
+            </p>
+          </div>
+          <div className="space-y-2.5">
+            {mythArticles.map((a) => (
+              <Link key={a.id} to="/guide/article/$id" params={{ id: a.id }}>
+                <Card className="rounded-[24px] border-primary/10 bg-card p-4 shadow-soft">
+                  <div className="mb-2 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-risk-yellow-soft px-2.5 py-1 text-[11px] font-bold text-risk-yellow">
+                      ความเข้าใจผิด
+                    </span>
+                    <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary">
+                      ข้อเท็จจริง
+                    </span>
+                  </div>
+                  <p className="text-sm font-bold leading-snug text-navy">{a.title}</p>
+                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-navy-soft">
+                    {a.summary}
+                  </p>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
