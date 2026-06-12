@@ -11,7 +11,13 @@ export const Route = createFileRoute("/_app/assess/radiation")({
   component: Page,
 });
 
-type RadiationAnswer = "none" | "buttock" | "thigh" | "below_knee" | "numbness_weakness" | "unknown";
+type RadiationAnswer =
+  | "none"
+  | "buttock"
+  | "thigh"
+  | "below_knee"
+  | "numbness_weakness"
+  | "unknown";
 
 const OPTIONS: {
   value: RadiationAnswer;
