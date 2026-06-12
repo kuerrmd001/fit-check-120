@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { AppHeader } from "@/components/AppHeader";
 import { ProgressSteps } from "@/components/ProgressSteps";
 import { Button } from "@/components/Button";
@@ -31,7 +32,13 @@ function isRiskyAnswer(answer: SafetyAnswer) {
 
 function Page() {
   const nav = useNavigate();
-  const { safety, setSafety } = useDraft();
+  const { details, safety, setSafety } = useDraft();
+
+  useEffect(() => {
+    if (typeof details.currentPainScore !== "number") {
+      nav({ to: "/assess/pain-scale", replace: true });
+    }
+  }, [details.currentPainScore, nav]);
 
   const handleAnswer = (key: keyof SafetyAnswers, answer: SafetyAnswer) => {
     setSafety({ [key]: answer });
@@ -49,7 +56,7 @@ function Page() {
         subtitle="คำถามนี้ช่วยดูว่าอาการของคุณควรได้รับการประเมินจากผู้เชี่ยวชาญหรือไม่"
         back
       />
-      <ProgressSteps step={2} total={5} label="Safety Check" />
+      <ProgressSteps step={3} total={6} label="Safety Check" />
       <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-6">
         <AlertBox tone="info" title="ตอบตามอาการจริง">
           คุณสามารถตรวจและแก้คำตอบได้ก่อนกดไปต่อ หากยังมีคำตอบ “มี” หรือ “ไม่แน่ใจ”
