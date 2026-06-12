@@ -59,7 +59,7 @@ const OPTIONS: {
   },
 ];
 
-function readSavedRadiation(value: string | number | boolean | undefined): RadiationAnswer | null {
+function readSavedRadiation(value: unknown): RadiationAnswer | null {
   return OPTIONS.some((option) => option.value === value) ? (value as RadiationAnswer) : null;
 }
 
