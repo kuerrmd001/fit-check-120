@@ -2,6 +2,9 @@ export type SafetyAnswer = "no" | "unsure" | "yes";
 export type RiskLevel = "green" | "yellow" | "red";
 export type ActivityType = "running" | "weights" | "unsure";
 export type FollowupTrend = "better" | "same" | "worse";
+export type SymptomTrend = "better" | "same" | "slightly_worse" | "much_worse";
+export type ReturnedToExercise = "no" | "light" | "same_as_before" | "pain_returned";
+export type DailyFunctionTrend = "improved" | "same" | "worse";
 export type AssessmentDetailValue = string | number | boolean | string[];
 
 export interface SafetyAnswers {
@@ -42,5 +45,12 @@ export interface FollowupRecord {
   dailyOk: boolean;
   followedPlan: boolean;
   newSymptoms: boolean;
+  followUpCompleted?: boolean;
+  followUpPainScore?: number;
+  symptomTrend?: SymptomTrend;
+  returnedToExercise?: ReturnedToExercise;
+  dailyFunctionTrend?: DailyFunctionTrend;
+  confidenceScore?: number;
+  followUpCompletedAt?: string;
   notes?: string;
 }

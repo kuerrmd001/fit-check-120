@@ -1,4 +1,4 @@
-import type { ActivityType, AssessmentRecord, RiskLevel } from "./types";
+import type { ActivityType, AssessmentRecord, FollowupRecord, RiskLevel } from "./types";
 
 const painLocationLabels: Record<string, string> = {
   "lower-back": "หลังล่าง",
@@ -67,6 +67,26 @@ const riskLevelLabels: Record<RiskLevel, string> = {
   yellow: "ปานกลาง",
   red: "สูง",
 };
+
+const followupTrendLabels = {
+  better: "ดีขึ้น",
+  same: "เท่าเดิม",
+  slightly_worse: "แย่ลงเล็กน้อย",
+  much_worse: "แย่ลงมาก",
+} as const;
+
+const returnedToExerciseLabels = {
+  no: "ยัง",
+  light: "กลับไปแบบเบา ๆ",
+  same_as_before: "กลับไปเท่าเดิม",
+  pain_returned: "กลับไปแล้วปวดซ้ำ",
+} as const;
+
+const dailyFunctionTrendLabels = {
+  improved: "ลดลง",
+  same: "เท่าเดิม",
+  worse: "แย่ลง",
+} as const;
 
 function readString(value: unknown) {
   return typeof value === "string" ? value : undefined;
@@ -137,10 +157,39 @@ export function getRiskLevelLabel(level: RiskLevel) {
 
 export function getFollowupStatus(a: AssessmentRecord) {
   const latest = a.followups[0];
-  if (!latest) return "รอติดตามอาการใน 24–48 ชั่วโมง";
-  if (latest.trend === "better") return "ติดตามล่าสุด: ดีขึ้น";
-  if (latest.trend === "same") return "ติดตามล่าสุด: เท่าเดิม";
-  return "ติดตามล่าสุด: แย่ลง";
+  if (!latest) return "รอติดตามอาการ";
+  const trend = getFollowupTrendLabel(latest);
+  if (trend === "ดีขึ้น") return "ติดตามแล้ว: ดีขึ้น";
+  if (trend === "เท่าเดิม") return "ติดตามแล้ว: เท่าเดิม";
+  return "ติดตามแล้ว: แย่ลง";
+}
+
+export function getFollowupTrendLabel(f: FollowupRecord) {
+  if (f.symptomTrend) return followupTrendLabels[f.symptomTrend];
+  if (f.trend === "better") return "ดีขึ้น";
+  if (f.trend === "same") return "เท่าเดิม";
+  return "แย่ลง";
+}
+
+export function getReturnedToExerciseLabel(f: FollowupRecord) {
+  return f.returnedToExercise ? returnedToExerciseLabels[f.returnedToExercise] : "ไม่ได้ระบุ";
+}
+
+export function getDailyFunctionTrendLabel(f: FollowupRecord) {
+  return f.dailyFunctionTrend ? dailyFunctionTrendLabels[f.dailyFunctionTrend] : "ไม่ได้ระบุ";
+}
+
+export function getFollowupResultCopy(f: FollowupRecord) {
+  if (f.symptomTrend === "much_worse" || f.returnedToExercise === "pain_returned") {
+    return "อาการแย่ลงจากครั้งก่อน ควรหยุดกิจกรรมที่กระตุ้นอาการ และพบผู้เชี่ยวชาญหากอาการรุนแรงขึ้น มีอาการร้าว ชา อ่อนแรง หรือไม่แน่ใจ";
+  }
+  if (f.symptomTrend === "slightly_worse" || f.trend === "worse") {
+    return "อาการแย่ลงเล็กน้อย ควรลดหรือหยุดกิจกรรมที่กระตุ้นอาการชั่วคราว และประเมินซ้ำ หากอาการยังแย่ลงควรพบผู้เชี่ยวชาญ";
+  }
+  if (f.symptomTrend === "same" || f.trend === "same") {
+    return "อาการยังใกล้เคียงเดิม ควรพักหรือปรับกิจกรรมต่อ และติดตามอาการอีกครั้ง หากไม่ดีขึ้นหรือรบกวนชีวิตประจำวัน ควรพบผู้เชี่ยวชาญ";
+  }
+  return "อาการมีแนวโน้มดีขึ้น สามารถค่อย ๆ เพิ่มกิจกรรมอย่างระมัดระวังได้ โดยหลีกเลี่ยงการเพิ่มความหนักเร็วเกินไป";
 }
 
 export function getMostCommonPrimaryTrigger(list: AssessmentRecord[]) {
