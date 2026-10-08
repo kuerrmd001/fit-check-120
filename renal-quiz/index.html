@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Renal Electrolyte & Diuretic Quiz</title>
+<style>
+  :root{
+    --bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#68738a;--line:#d9dfeb;
+    --accent:#315efb;--accent-soft:#eef2ff;--ok:#198754;--ok-bg:#eaf8f1;
+    --bad:#c93434;--bad-bg:#fdeeee;--warn:#996300;--warn-bg:#fff7dd;
+    --shadow:0 10px 30px rgba(30,44,80,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Thai",Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:1500px;margin:0 auto;padding:24px}
+  .hero{background:linear-gradient(135deg,#1f3a8a,#315efb 60%,#6d8cff);color:#fff;border-radius:20px;padding:26px 28px;box-shadow:var(--shadow);margin-bottom:18px}
+  .hero h1{margin:0 0 6px;font-size:clamp(1.55rem,2.5vw,2.35rem)}
+  .hero p{margin:0;opacity:.93;max-width:900px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0}
+  button{border:0;border-radius:11px;padding:10px 14px;font-weight:700;cursor:pointer;font:inherit}
+  button.primary{background:var(--accent);color:#fff}
+  button.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  button.ghost{background:transparent;color:var(--accent);padding:7px 9px}
+  button.danger{background:#fff;color:var(--bad);border:1px solid #efb7b7}
+  button:hover{filter:brightness(.98)}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-left:auto}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:.92rem}
+  .section{background:var(--card);border-radius:18px;box-shadow:var(--shadow);margin:18px 0;padding:18px}
+  .section h2{margin:0 0 4px;font-size:1.25rem}
+  .section .sub{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+  .notice{background:var(--warn-bg);border:1px solid #efd889;color:#624a00;border-radius:12px;padding:10px 12px;margin:12px 0;font-size:.92rem}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;max-height:74vh}
+  table{border-collapse:separate;border-spacing:0;width:100%;min-width:1180px;background:#fff}
+  th,td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;vertical-align:middle}
+  th:last-child,td:last-child{border-right:0}
+  tr:last-child td{border-bottom:0}
+  thead th{position:sticky;top:0;z-index:4;background:#f7f9fd;font-size:.86rem;text-align:left}
+  th:first-child,td:first-child{position:sticky;left:0;z-index:3;background:#fff;min-width:190px}
+  thead th:first-child{z-index:5;background:#f7f9fd}
+  tbody tr.quiz-row:hover td{background:#fbfcff}
+  tbody tr.quiz-row:hover td:first-child{background:#fbfcff}
+  .name{font-weight:800}
+  .mini{font-size:.78rem;color:var(--muted)}
+  select{width:100%;min-width:120px;padding:9px 32px 9px 10px;border:1px solid #cfd6e4;border-radius:10px;background:#fff;color:var(--ink);font:inherit;outline:none;transition:.15s}
+  select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(49,94,251,.12)}
+  select.correct{border-color:var(--ok);background:var(--ok-bg);color:#0e5e3a}
+  select.wrong{border-color:var(--bad);background:var(--bad-bg);color:#8f2323}
+  .actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-width:145px}
+  .status{font-size:.8rem;color:var(--muted)}
+  .status.good{color:var(--ok);font-weight:800}
+  .status.bad{color:var(--bad);font-weight:800}
+  .explain-row{display:none}
+  .explain-row.open{display:table-row}
+  .explain-box{background:#f8faff;padding:16px;border-left:4px solid var(--accent)}
+  .answer-chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 10px}
+  .chip{border:1px solid #cfd8ff;background:#fff;border-radius:999px;padding:5px 9px;font-size:.84rem}
+  .why{margin:8px 0 0;color:#33415d}
+  .key{margin-top:10px;background:#fff;border:1px dashed #b8c3e8;border-radius:10px;padding:9px 10px;font-weight:700}
+  .footer{color:var(--muted);font-size:.84rem;margin:20px 4px 40px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.86rem;color:var(--muted);margin-top:8px}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+  .dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}
+  @media (max-width:760px){
+    .wrap{padding:12px}.hero{padding:18px}.section{padding:12px}.stats{margin-left:0;width:100%}.stat{flex:1}.toolbar button{flex:1}.table-wrap{max-height:none}
+  }
+  @media print{
+    .hero,.toolbar,.footer,.actions{display:none!important}.section{box-shadow:none}.table-wrap{overflow:visible;max-height:none}thead th,th:first-child,td:first-child{position:static}.explain-row{display:table-row!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1>Renal Electrolyte & Diuretic Quiz</h1>
+    <p>แบบฝึกหัดเติมตารางจากภาพ worksheet: เลือกคำตอบในแต่ละช่อง → กดตรวจรายแถวหรือทั้งหมด → กดดูเฉลยเพื่ออ่านกลไก</p>
+  </section>
+
+  <div class="toolbar">
+    <button class="primary" id="checkAll">ตรวจทั้งหมด</button>
+    <button class="secondary" id="toggleAll">เปิด/ปิดเฉลยทั้งหมด</button>
+    <button class="danger" id="resetAll">ล้างคำตอบ</button>
+    <div class="stats">
+      <div class="stat" id="answeredStat">ตอบแล้ว 0/0</div>
+      <div class="stat" id="correctStat">ถูก 0/0</div>
+      <div class="stat" id="rowStat">แถวเต็ม 0/0</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>หมายเหตุ:</strong> คอลัมน์ Na⁺/K⁺ ในหน้านี้ตีความเป็น <strong>serum tendency แบบข้อสอบพื้นฐาน</strong> ตามตารางที่ส่งมา; serum Na⁺ จริงขึ้นกับ water balance และ severity จึงมีบางภาวะที่ในชีวิตจริงอาจแปรผันได้
+  </div>
+
+  <section class="section">
+    <h2>ตารางที่ 1 — Diuretics & Tubular Disorders</h2>
+    <p class="sub">Drug / Condition → site, transporter/target, electrolytes, acid–base และ high-yield effect</p>
+    <div class="table-wrap"><table id="table1"></table></div>
+  </section>
+
+  <section class="section">
+    <h2>ตารางที่ 2 — Clinical Situations</h2>
+    <p class="sub">ทำนาย Na⁺, K⁺ และ acid–base จากกลไก</p>
+    <div class="table-wrap"><table id="table2"></table></div>
+  </section>
+
+  <div class="legend"><span><i class="dot ok"></i>เขียว = ถูก</span><span><i class="dot bad"></i>แดง = ผิด</span><span>↔ = โดยทั่วไปใกล้ปกติ/ไม่มีการเปลี่ยนเด่น</span></div>
+  <div class="footer">Educational use only • ทำงานใน browser โดยไม่ส่งคำตอบขึ้น server • progress บันทึกในเครื่องด้วย localStorage</div>
+</div>
+
+<script>
+const ARROWS=["↑","↓","↔"];
+const ACID=["Metabolic acidosis","Metabolic alkalosis","No major primary change"];
+const STORAGE_KEY="renal_quiz_v1";
+
+const quiz1=[
+ {name:"Acetazolamide", site:["PCT","TAL","DCT","Collecting duct"], aSite:"PCT",
+  target:["Carbonic anhydrase (CA II/IV)","NKCC2","NCC","ENaC","Mineralocorticoid receptor"], aTarget:"Carbonic anhydrase (CA II/IV)",
+  na:ARROWS,aNa:"↓", k:ARROWS,aK:"↓", acid:ACID,aAcid:"Metabolic acidosis",
+  other:["Urine pH ↑","Urine pH ↓","Urinary Ca²⁺ ↑","Plasma osmolality ↑"],aOther:"Urine pH ↑",
+  why:"ยับยั้ง carbonic anhydrase ที่ proximal tubule → ดูดกลับ HCO₃⁻ และ Na⁺ ลดลง → bicarbonaturia ทำให้ urine เป็นด่าง แต่ serum HCO₃⁻ ลดลงจึงเกิด metabolic acidosis. Na⁺/HCO₃⁻ ไป distal มากขึ้นช่วยเพิ่ม K⁺ secretion.",
+  key:"จำ: Acetazolamide = alkaline urine + metabolic acidosis"},
+ {name:"Furosemide", site:["PCT","TAL","DCT","Collecting duct"], aSite:"TAL",
+  target:["Carbonic anhydrase (CA II/IV)","NKCC2","NCC","ENaC"], aTarget:"NKCC2",
+  na:ARROWS,aNa:"↓", k:ARROWS,aK:"↓", acid:ACID,aAcid:"Metabolic alkalosis",
+  other:["Urinary Ca²⁺ ↑","Urinary Ca²⁺ ↓","Urine pH ↑","Plasma osmolality ↑"],aOther:"Urinary Ca²⁺ ↑",
+  why:"Block NKCC2 ใน thick ascending limb → NaCl reabsorption ลดและสูญเสีย lumen-positive potential → Ca²⁺/Mg²⁺ reabsorption แบบ paracellular ลด. Distal Na delivery + RAAS เพิ่ม → K⁺ และ H⁺ secretion เพิ่ม → hypokalemic metabolic alkalosis.",
+  key:"จำ: Loop = Lose Ca²⁺"},
+ {name:"Thiazide", site:["PCT","TAL","DCT","Collecting duct"], aSite:"DCT",
+  target:["NKCC2","NCC","ENaC","Carbonic anhydrase (CA II/IV)"],aTarget:"NCC",
+  na:ARROWS,aNa:"↓", k:ARROWS,aK:"↓", acid:ACID,aAcid:"Metabolic alkalosis",
+  other:["Urinary Ca²⁺ ↓","Urinary Ca²⁺ ↑","Urine pH ↑","Plasma osmolality ↑"],aOther:"Urinary Ca²⁺ ↓",
+  why:"Block NCC ที่ DCT → mild natriuresis และ distal Na delivery เพิ่ม → K⁺/H⁺ secretion เพิ่ม. Intracellular Na⁺ ที่ DCT ลดลงทำให้ basolateral Na⁺/Ca²⁺ exchanger ทำงานดีขึ้น → Ca²⁺ reabsorption เพิ่ม → urine Ca²⁺ ลด.",
+  key:"จำ: Thiazide saves Ca²⁺"},
+ {name:"Spironolactone", site:["PCT","TAL","DCT","Collecting duct"],aSite:"Collecting duct",
+  target:["Mineralocorticoid receptor","ENaC","NCC","NKCC2"],aTarget:"Mineralocorticoid receptor",
+  na:ARROWS,aNa:"↔", k:ARROWS,aK:"↑", acid:ACID,aAcid:"Metabolic acidosis",
+  other:["Gynecomastia / antiandrogen effects","Treats Liddle syndrome directly","Urinary Ca²⁺ ↑","Urine pH ↑"],aOther:"Gynecomastia / antiandrogen effects",
+  why:"Block aldosterone signaling ใน distal nephron → ENaC activity ลด → lumen negativity ลด → K⁺ secretion ลด. Distal H⁺ secretion ลดด้วย จึงเกิด hyperkalemia และ metabolic acidosis ได้.",
+  key:"K-sparing: K⁺ ↑ + acidosis"},
+ {name:"Amiloride", site:["PCT","TAL","DCT","Collecting duct"],aSite:"Collecting duct",
+  target:["ENaC","Mineralocorticoid receptor","NCC","NKCC2"],aTarget:"ENaC",
+  na:ARROWS,aNa:"↔", k:ARROWS,aK:"↑", acid:ACID,aAcid:"Metabolic acidosis",
+  other:["Treats Liddle syndrome","Gynecomastia / antiandrogen effects","Urinary Ca²⁺ ↑","Urine pH ↑"],aOther:"Treats Liddle syndrome",
+  why:"Block ENaC ที่ principal cell โดยตรง → Na⁺ reabsorption ลด → lumen negative น้อยลง → K⁺ secretion ลด และ H⁺ excretion ลดตาม distal electrochemical drive.",
+  key:"Amiloride = ENaC blocker → ใช้ใน Liddle"},
+ {name:"Mannitol", site:["PCT + descending limb","PCT","TAL","Collecting duct"],aSite:"PCT + descending limb",
+  target:["Osmotic effect / no specific transporter","AQP2","NKCC2","NCC"],aTarget:"Osmotic effect / no specific transporter",
+  na:["↓ initially; ↑ later possible","↑","↓","↔"],aNa:"↓ initially; ↑ later possible", k:ARROWS,aK:"↓", acid:ACID,aAcid:"No major primary change",
+  other:["Plasma osmolality ↑","Plasma osmolality ↓","Urinary Ca²⁺ ↓","Urine pH ↑"],aOther:"Plasma osmolality ↑",
+  why:"Mannitol ถูกกรองแต่ไม่ถูกดูดกลับ → เพิ่ม tubular osmolality และดึงน้ำค้างใน lumen. ใน plasma มันเพิ่ม ECF osmolality จึงดึงน้ำจาก ICF → dilutional hyponatremia ระยะแรก; ต่อมาถ้าเสีย free water มากอาจเกิด hypernatremia. K⁺ อาจสูญเสียมากขึ้นจาก high distal flow.",
+  key:"Osmotic diuretic = water follows osmoles"},
+ {name:"Gitelman syndrome", site:["PCT","TAL","DCT","Collecting duct"],aSite:"DCT",
+  target:["NCC loss-of-function","NKCC2 loss-of-function","ENaC gain-of-function","Mineralocorticoid receptor"],aTarget:"NCC loss-of-function",
+  na:ARROWS,aNa:"↔", k:ARROWS,aK:"↓", acid:ACID,aAcid:"Metabolic alkalosis",
+  other:["Urinary Ca²⁺ ↓ + hypomagnesemia","Urinary Ca²⁺ ↑","Low renin + low aldosterone","Plasma osmolality ↑"],aOther:"Urinary Ca²⁺ ↓ + hypomagnesemia",
+  why:"NCC loss-of-function ที่ DCT เลียนแบบ thiazide → renal salt wasting → RAAS activation → K⁺/H⁺ secretion เพิ่ม → hypokalemic metabolic alkalosis. Calcium reabsorption เพิ่มและ Mg²⁺ ลด.",
+  key:"Gitelman = Thiazide-like = hypocalciuria + hypomagnesemia"},
+ {name:"Bartter syndrome", site:["PCT","TAL","DCT","Collecting duct"],aSite:"TAL",
+  target:["NKCC2 / TAL salt-transport pathway loss-of-function","NCC loss-of-function","ENaC gain-of-function","Carbonic anhydrase"],aTarget:"NKCC2 / TAL salt-transport pathway loss-of-function",
+  na:ARROWS,aNa:"↔", k:ARROWS,aK:"↓", acid:ACID,aAcid:"Metabolic alkalosis",
+  other:["Resembles loop diuretic + urinary Ca²⁺ ↑","Resembles thiazide + urinary Ca²⁺ ↓","Low renin + low aldosterone","Urine pH ↑"],aOther:"Resembles loop diuretic + urinary Ca²⁺ ↑",
+  why:"Defect ของ TAL salt transport (classic pattern: NKCC2/ROMK/ClC-K pathway) เลียนแบบ loop diuretic → salt wasting → RAAS สูง → hypokalemic metabolic alkalosis และมีแนวโน้ม hypercalciuria.",
+  key:"Bartter = Loop-like"},
+ {name:"Liddle syndrome", site:["PCT","TAL","DCT","Collecting duct"],aSite:"Collecting duct",
+  target:["ENaC gain-of-function","NCC loss-of-function","NKCC2 loss-of-function","Mineralocorticoid receptor activation"],aTarget:"ENaC gain-of-function",
+  na:ARROWS,aNa:"↔", k:ARROWS,aK:"↓", acid:ACID,aAcid:"Metabolic alkalosis",
+  other:["Hypertension + low renin + low aldosterone","Hypocalciuria + hypomagnesemia","Hypercalciuria","High renin + high aldosterone"],aOther:"Hypertension + low renin + low aldosterone",
+  why:"ENaC เปิดมากเกิน → Na⁺ reabsorption และ ECF volume เพิ่ม → hypertension. Lumen เป็นลบมากขึ้น → K⁺ และ H⁺ secretion เพิ่ม → hypokalemic metabolic alkalosis. Volume expansion กด renin และ aldosterone.",
+  key:"Liddle: ENaC ON, aldosterone LOW; treat with amiloride"}
+];
+
+const quiz2=[
+ {name:"Prolonged nasogastric suction",na:ARROWS,aNa:"↓",k:ARROWS,aK:"↓",acid:["Metabolic alkalosis","Normal anion gap metabolic acidosis","High anion gap metabolic acidosis","No major change"],aAcid:"Metabolic alkalosis",
+  why:"สูญเสีย gastric HCl → สูญเสีย H⁺ และ Cl⁻ → metabolic alkalosis. Volume contraction กระตุ้น RAAS/aldosterone และเพิ่ม K⁺ loss → hypokalemia.",key:"Vomiting/NG suction = lose acid → alkalosis"},
+ {name:"Acute severe diarrhea",na:ARROWS,aNa:"↓",k:ARROWS,aK:"↓",acid:["Normal anion gap metabolic acidosis","Metabolic alkalosis","High anion gap metabolic acidosis","No major change"],aAcid:"Normal anion gap metabolic acidosis",
+  why:"Stool มี HCO₃⁻ และ K⁺ → severe diarrhea ทำให้สูญเสีย bicarbonate + potassium → hyperchloremic normal-anion-gap metabolic acidosis + hypokalemia.",key:"Diarrhea = lose base → acidosis"},
+ {name:"Addison disease",na:ARROWS,aNa:"↓",k:ARROWS,aK:"↑",acid:["Metabolic acidosis","Metabolic alkalosis","No major change"],aAcid:"Metabolic acidosis",
+  why:"Primary adrenal insufficiency → aldosterone ต่ำ → Na⁺ reabsorption ลด, K⁺ และ H⁺ secretion ลด → hyponatremia, hyperkalemia และ metabolic acidosis.",key:"No aldosterone = Na↓ K↑ acidosis"},
+ {name:"Secondary hyperaldosteronism",na:ARROWS,aNa:"↔",k:ARROWS,aK:"↓",acid:["Metabolic alkalosis","Metabolic acidosis","No major change"],aAcid:"Metabolic alkalosis",
+  why:"RAAS activation → aldosterone สูง → ENaC-mediated Na reabsorption เพิ่มและ distal K⁺/H⁺ secretion เพิ่ม. Serum Na มักยังใกล้ปกติจาก water regulation/aldosterone escape.",key:"Aldosterone effect ↑ → K↓ + alkalosis"},
+ {name:"Patient receiving an ARB",na:ARROWS,aNa:"↔",k:ARROWS,aK:"↑",acid:["Metabolic acidosis","Metabolic alkalosis","No major change"],aAcid:"Metabolic acidosis",
+  why:"ARB ลด Ang II signaling → aldosterone ลด → K⁺ excretion และ distal acid excretion ลด. จึงเสี่ยง hyperkalemia และ metabolic acidosis โดยเฉพาะ CKD/diabetes.",key:"ARB → aldosterone effect ↓ → K↑ + acidosis"},
+ {name:"Loop diuretic therapy",na:ARROWS,aNa:"↓",k:ARROWS,aK:"↓",acid:["Metabolic alkalosis","Metabolic acidosis","No major change"],aAcid:"Metabolic alkalosis",
+  why:"NKCC2 block → natriuresis + volume contraction → RAAS/aldosterone ↑ และ distal Na delivery ↑ → K⁺/H⁺ secretion ↑ → hypokalemic metabolic alkalosis.",key:"Loop = salt loss + RAAS → K↓ alkalosis"},
+ {name:"Type 4 RTA",na:ARROWS,aNa:"↔",k:ARROWS,aK:"↑",acid:["Normal anion gap metabolic acidosis","Metabolic alkalosis","High anion gap metabolic acidosis","No major change"],aAcid:"Normal anion gap metabolic acidosis",
+  why:"Hypoaldosteronism หรือ aldosterone resistance → K⁺ secretion ลด → hyperkalemia. Hyperkalemia ลด ammoniagenesis/NH₄⁺ excretion → ขับ acid ลด → normal-anion-gap metabolic acidosis.",key:"Type 4 RTA = the hyperkalemic RTA"},
+ {name:"Primary aldosteronism",na:ARROWS,aNa:"↔",k:ARROWS,aK:"↓",acid:["Metabolic alkalosis","Metabolic acidosis","No major change"],aAcid:"Metabolic alkalosis",
+  why:"Aldosterone สูง → Na⁺ reabsorption/volume expansion → hypertension และ K⁺/H⁺ secretion เพิ่ม → hypokalemia + metabolic alkalosis. Serum Na มักปกติหรือสูงเพียงเล็กน้อย.",key:"Primary aldosteronism = HTN + K↓ + alkalosis"}
+];
+
+function esc(s){return String(s).replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
+function makeSelect(id, choices, placeholder="เลือกคำตอบ"){
+  return `<select id="${id}" data-qid="${id}"><option value="">— ${placeholder} —</option>${choices.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("")}</select>`
+}
+function buildTable1(){
+ const t=document.getElementById("table1");
+ t.innerHTML=`<thead><tr><th>Drug / Condition</th><th>Site of action</th><th>Transporter / Target</th><th>Na⁺</th><th>K⁺</th><th>Acid–base</th><th>Other important effects</th><th>ตรวจ / เฉลย</th></tr></thead><tbody>`+
+ quiz1.map((q,i)=>{
+  const p=`t1_${i}`;
+  return `<tr class="quiz-row" data-row="${p}"><td><div class="name">${esc(q.name)}</div></td><td>${makeSelect(p+"_site",q.site)}</td><td>${makeSelect(p+"_target",q.target)}</td><td>${makeSelect(p+"_na",q.na)}</td><td>${makeSelect(p+"_k",q.k)}</td><td>${makeSelect(p+"_acid",q.acid)}</td><td>${makeSelect(p+"_other",q.other)}</td><td><div class="actions"><button class="secondary row-check" data-row="${p}">ตรวจแถว</button><button class="ghost reveal" data-row="${p}">ดูเฉลย ▾</button><span class="status" id="${p}_status">ยังไม่ตรวจ</span></div></td></tr>`+
+  `<tr class="explain-row" id="${p}_explain"><td colspan="8"><div class="explain-box"><strong>เฉลย</strong><div class="answer-chips"><span class="chip">Site: ${esc(q.aSite)}</span><span class="chip">Target: ${esc(q.aTarget)}</span><span class="chip">Na⁺: ${esc(q.aNa)}</span><span class="chip">K⁺: ${esc(q.aK)}</span><span class="chip">Acid–base: ${esc(q.aAcid)}</span><span class="chip">Other: ${esc(q.aOther)}</span></div><p class="why">${esc(q.why)}</p><div class="key">${esc(q.key)}</div></div></td></tr>`
+ }).join("")+`</tbody>`;
+}
+function buildTable2(){
+ const t=document.getElementById("table2");
+ t.innerHTML=`<thead><tr><th>Clinical situation</th><th>Na⁺</th><th>K⁺</th><th>Acid–base</th><th>ตรวจ / เฉลย</th></tr></thead><tbody>`+
+ quiz2.map((q,i)=>{
+  const p=`t2_${i}`;
+  return `<tr class="quiz-row" data-row="${p}"><td><div class="name">${esc(q.name)}</div></td><td>${makeSelect(p+"_na",q.na)}</td><td>${makeSelect(p+"_k",q.k)}</td><td>${makeSelect(p+"_acid",q.acid)}</td><td><div class="actions"><button class="secondary row-check" data-row="${p}">ตรวจแถว</button><button class="ghost reveal" data-row="${p}">ดูเฉลย ▾</button><span class="status" id="${p}_status">ยังไม่ตรวจ</span></div></td></tr>`+
+  `<tr class="explain-row" id="${p}_explain"><td colspan="5"><div class="explain-box"><strong>เฉลย</strong><div class="answer-chips"><span class="chip">Na⁺: ${esc(q.aNa)}</span><span class="chip">K⁺: ${esc(q.aK)}</span><span class="chip">Acid–base: ${esc(q.aAcid)}</span></div><p class="why">${esc(q.why)}</p><div class="key">${esc(q.key)}</div></div></td></tr>`
+ }).join("")+`</tbody>`;
+}
+
+function answerMap(){
+ const m={};
+ quiz1.forEach((q,i)=>{const p=`t1_${i}`;Object.assign(m,{[p+"_site"]:q.aSite,[p+"_target"]:q.aTarget,[p+"_na"]:q.aNa,[p+"_k"]:q.aK,[p+"_acid"]:q.aAcid,[p+"_other"]:q.aOther})});
+ quiz2.forEach((q,i)=>{const p=`t2_${i}`;Object.assign(m,{[p+"_na"]:q.aNa,[p+"_k"]:q.aK,[p+"_acid"]:q.aAcid})});
+ return m;
+}
+const ANSWERS=answerMap();
+
+function rowSelects(rowId){return [...document.querySelectorAll(`[data-row="${rowId}"] select`)]}
+function checkRow(rowId){
+ const sels=rowSelects(rowId);let good=0;
+ sels.forEach(s=>{s.classList.remove("correct","wrong");if(s.value && s.value===ANSWERS[s.id]){s.classList.add("correct");good++}else{s.classList.add("wrong")}});
+ const st=document.getElementById(rowId+"_status");st.textContent=`${good}/${sels.length} ถูก`;st.className="status "+(good===sels.length?"good":"bad");
+ save();updateStats();
+}
+function toggleExplain(rowId, force){
+ const r=document.getElementById(rowId+"_explain");const willOpen=force===undefined?!r.classList.contains("open"):force;r.classList.toggle("open",willOpen);
+ const btn=document.querySelector(`.reveal[data-row="${rowId}"]`);if(btn)btn.textContent=willOpen?"ซ่อนเฉลย ▴":"ดูเฉลย ▾";
+}
+function allSelects(){return [...document.querySelectorAll("select[data-qid]")]}
+function updateStats(){
+ const sels=allSelects(); const answered=sels.filter(s=>s.value).length; const correct=sels.filter(s=>s.classList.contains("correct")).length;
+ const rows=[...document.querySelectorAll("tr.quiz-row")]; const perfect=rows.filter(r=>{const ss=[...r.querySelectorAll("select")];return ss.length&&ss.every(s=>s.classList.contains("correct"))}).length;
+ document.getElementById("answeredStat").textContent=`ตอบแล้ว ${answered}/${sels.length}`;
+ document.getElementById("correctStat").textContent=`ถูก ${correct}/${sels.length}`;
+ document.getElementById("rowStat").textContent=`แถวเต็ม ${perfect}/${rows.length}`;
+}
+function save(){
+ const obj={};allSelects().forEach(s=>obj[s.id]={value:s.value,state:s.classList.contains("correct")?"correct":s.classList.contains("wrong")?"wrong":""});
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(obj));
+}
+function load(){
+ try{const obj=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");Object.entries(obj).forEach(([id,v])=>{const s=document.getElementById(id);if(!s)return;s.value=v.value||"";if(v.state)s.classList.add(v.state)});
+  [...document.querySelectorAll("tr.quiz-row")].forEach(r=>{const ss=[...r.querySelectorAll("select")];if(ss.some(s=>s.classList.contains("correct")||s.classList.contains("wrong"))){const good=ss.filter(s=>s.classList.contains("correct")).length;const st=document.getElementById(r.dataset.row+"_status");st.textContent=`${good}/${ss.length} ถูก`;st.className="status "+(good===ss.length?"good":"bad")}})
+ }catch(e){}
+ updateStats();
+}
+
+buildTable1();buildTable2();load();
+
+document.addEventListener("change",e=>{if(e.target.matches("select[data-qid]")){e.target.classList.remove("correct","wrong");const row=e.target.closest("tr.quiz-row");const st=document.getElementById(row.dataset.row+"_status");st.textContent="ยังไม่ตรวจ";st.className="status";save();updateStats();}});
+document.addEventListener("click",e=>{
+ const rc=e.target.closest(".row-check"); if(rc){checkRow(rc.dataset.row);return}
+ const rv=e.target.closest(".reveal"); if(rv){toggleExplain(rv.dataset.row);return}
+});
+document.getElementById("checkAll").onclick=()=>{document.querySelectorAll("tr.quiz-row").forEach(r=>checkRow(r.dataset.row));};
+let allOpen=false;document.getElementById("toggleAll").onclick=()=>{allOpen=!allOpen;document.querySelectorAll("tr.quiz-row").forEach(r=>toggleExplain(r.dataset.row,allOpen));};
+document.getElementById("resetAll").onclick=()=>{if(confirm("ล้างคำตอบทั้งหมดและเริ่มใหม่?")){localStorage.removeItem(STORAGE_KEY);allSelects().forEach(s=>{s.value="";s.classList.remove("correct","wrong")});document.querySelectorAll(".status").forEach(x=>{x.textContent="ยังไม่ตรวจ";x.className="status"});document.querySelectorAll(".explain-row").forEach(x=>x.classList.remove("open"));document.querySelectorAll(".reveal").forEach(x=>x.textContent="ดูเฉลย ▾");allOpen=false;updateStats();}};
+</script>
+</body>
+</html>
